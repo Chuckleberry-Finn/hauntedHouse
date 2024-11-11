@@ -10,7 +10,7 @@
   "collisionTolerance":0,
   "DynamicTexturePage":false,
   "edgeFiltering":false,
-  "For3D":false,
+  "For3D":true,
   "frames":[
     {"$GMSpriteFrame":"","%Name":"4c8512e9-83d4-4022-b6fa-0c19c0f73592","name":"4c8512e9-83d4-4022-b6fa-0c19c0f73592","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"a2cf0f9b-7786-41f9-b21b-114dfb93f6ef","name":"a2cf0f9b-7786-41f9-b21b-114dfb93f6ef","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
@@ -37,7 +37,7 @@
   "height":130,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"f936c23c-a215-4440-ae1d-c4e723b6a713","blendMode":0,"displayName":"default","isLocked":false,"name":"f936c23c-a215-4440-ae1d-c4e723b6a713","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"30ea9d0a-8ae2-4bc1-b60d-4533fe5398af","blendMode":0,"displayName":"default","isLocked":false,"name":"30ea9d0a-8ae2-4bc1-b60d-4533fe5398af","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"plant",
   "nineSlice":null,

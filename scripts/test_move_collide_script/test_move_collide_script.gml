@@ -46,7 +46,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
     instance = instance_place(new_x, new_y, o_stacked3D);
 
     // Handle collision with circular objects
-    if (instance != noone) {
+    if (instance != noone and instance.solid) {
         var obj_x = instance.x;
         var obj_y = instance.y;
         var obj_radius = instance.sprite_width / 2;

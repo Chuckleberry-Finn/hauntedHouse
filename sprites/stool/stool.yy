@@ -10,7 +10,7 @@
   "collisionTolerance":0,
   "DynamicTexturePage":false,
   "edgeFiltering":false,
-  "For3D":false,
+  "For3D":true,
   "frames":[
     {"$GMSpriteFrame":"","%Name":"c5921eb2-3df5-4557-9b8b-3f1f2e279fa9","name":"c5921eb2-3df5-4557-9b8b-3f1f2e279fa9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"25a7a46c-b787-4629-b8ee-14751014ecdb","name":"25a7a46c-b787-4629-b8ee-14751014ecdb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},

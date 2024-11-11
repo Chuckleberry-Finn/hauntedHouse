@@ -2,9 +2,9 @@
   "$GMSprite":"",
   "%Name":"floor_texture",
   "bboxMode":0,
-  "bbox_bottom":127,
+  "bbox_bottom":255,
   "bbox_left":0,
-  "bbox_right":127,
+  "bbox_right":255,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -16,7 +16,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":128,
+  "height":256,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"b5792eaa-43d2-449d-a88a-474b90fa331a","blendMode":0,"displayName":"default","isLocked":false,"name":"b5792eaa-43d2-449d-a88a-474b90fa331a","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":128,
+  "width":256,
 }

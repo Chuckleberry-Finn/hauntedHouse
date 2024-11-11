@@ -1,6 +1,7 @@
 gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
+//gpu_set_cullmode(cull_noculling);
 
 global.view_xy = 45
 
@@ -36,6 +37,7 @@ global.leftWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "west",
 global.bottomWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "south",})
 
 global.current_room = false
+global.current_room_objs = []
 
 global.houseHandler = instance_create_depth(-1,-1,-1, house_handler)
 global.house_map = global.houseHandler.generate_house_map(max_rooms, num_floors);

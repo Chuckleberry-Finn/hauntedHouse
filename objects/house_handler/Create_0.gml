@@ -150,14 +150,16 @@ function enter_room(door, room_id, floor_id) {
 
     global.current_room = _room;
 
-    show_debug_message("Textures set. Placing objects...");
+    //show_debug_message("Textures set. Placing objects...");
 
+	global.current_room_objs = []
     for (var i = 0; i < array_length(_room.objects); i++) {
         var obj_data = _room.objects[i];
         var obj_type = asset_get_index(obj_data[? "type"]);
         if (obj_type != -1) {
-            instance_create_layer(obj_data[? "x"], obj_data[? "y"], "Instances", obj_type);
-        }
+            var o = instance_create_layer(obj_data[? "x"], obj_data[? "y"], "Instances", obj_type);
+			array_push(global.current_room_objs, o);
+		}
     }
 	
 	// Position player near the door they entered from
@@ -184,7 +186,7 @@ function enter_room(door, room_id, floor_id) {
 
 function fill_room(_room) {
     show_debug_message("Filling room " + string(_room.room_id));
-    var object_list = ["o_plant", "o_stool"];
+    var object_list = ["o_plant", "o_stool", "o_rug1", "o_shelf"];
     var num_objects = irandom_range(2, 5);
 
     for (var i = 0; i < num_objects; i++) {
@@ -203,5 +205,5 @@ function fill_room(_room) {
     }
 
     _room.generated = true;
-    show_debug_message("Room " + string(_room.room_id) + " filled with objects");
+    //show_debug_message("Room " + string(_room.room_id) + " filled with objects");
 }
