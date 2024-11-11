@@ -55,7 +55,7 @@ for (var _y = 0; _y < grid_size; _y++) {
 
             for (var d = 0; d < 4; d++) {
                 var connected_room_id = _room.connected_room_ids[d];
-                if (connected_room_id != 0) {
+                if (connected_room_id != undefined) {
                     var connected_room = global.house_map[_room.floor_id][connected_room_id];
                     if (connected_room != undefined) {
                         // Calculate the position of the connected room
