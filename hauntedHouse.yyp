@@ -1,6 +1,6 @@
 {
   "$GMProject":"",
-  "%Name":"3dTut",
+  "%Name":"hauntedHouse",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -35,7 +35,7 @@
   "MetaData":{
     "IDEVersion":"2024.8.1.171",
   },
-  "name":"3dTut",
+  "name":"hauntedHouse",
   "resources":[
     {"id":{"name":"house_handler","path":"objects/house_handler/house_handler.yy",},},
     {"id":{"name":"master","path":"objects/master/master.yy",},},
