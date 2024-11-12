@@ -1,3 +1,4 @@
+gpu_set_alphatestenable(true); // Enable alpha testing
 gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);

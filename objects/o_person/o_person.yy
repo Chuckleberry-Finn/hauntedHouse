@@ -4,7 +4,9 @@
   "eventList":[],
   "managed":true,
   "name":"o_person",
-  "overriddenProperties":[],
+  "overriddenProperties":[
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"o_stacked3D","path":"objects/o_stacked3D/o_stacked3D.yy",},"propertyId":{"name":"o_z","path":"objects/o_stacked3D/o_stacked3D.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"-5",},
+  ],
   "parent":{
     "name":"entities",
     "path":"folders/Objects/entities.yy",
