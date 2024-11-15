@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"get_light_intensity_at_position",
+  "%Name":"smoothstep",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"get_light_intensity_at_position",
+  "name":"smoothstep",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
