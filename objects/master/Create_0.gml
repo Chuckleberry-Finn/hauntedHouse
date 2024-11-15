@@ -25,6 +25,7 @@ instance_create_depth(-1,-1,-1, obj_debug)
 
 global.player = instance_create_depth(room_width/2,50,0, o_person)
 
+grid_size = 20;
 max_rooms = 25;
 num_floors = 1;
 
@@ -46,3 +47,17 @@ global.house_map = global.houseHandler.generate_house_map(max_rooms, num_floors)
 show_debug_message("Generated House Map: ", array_length(global.house_map) )
 
 global.houseHandler.enter_room("north", 0, 0)
+
+
+global.lights = []
+global.num_lights = 0
+global.darkness_surface = surface_create(room_width, room_height);  // Create surface for the entire room size
+// Initialize the darkness map by clearing it with fully black (darkness)
+surface_set_target(global.darkness_surface);
+draw_clear_alpha(c_black, 1);  // Fully dark
+surface_reset_target();
+
+
+// Add a new light source to the global lights array
+global.num_lights += 1;
+global.lights[global.num_lights - 1] = instance_create_depth(room_width/2, room_height/2,-5, obj_light);  // Creates a new light source at position (x, y)

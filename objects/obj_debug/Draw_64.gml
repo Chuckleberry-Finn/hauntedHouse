@@ -7,7 +7,7 @@ var offset_y = 20; // Distance from the top of the screen
 var gap_from_right = 20; // Distance from the right side of the screen
 
 // Define the full grid size (20x20 square)
-var grid_size = 20;
+var grid_size = master.grid_size;
 
 // Calculate the total width and height of the minimap
 var minimap_width = (grid_size * (room_size + padding)) - padding;

@@ -130,7 +130,7 @@ function enter_room(door, room_id, floor_id) {
 	var player =  global.player
 
     with (all) {
-        if (id != player && !(x == -1 && y == -1)) {
+        if (object_index != obj_light && id != player && !(x == -1 && y == -1)) {
             instance_destroy();
         }
     }

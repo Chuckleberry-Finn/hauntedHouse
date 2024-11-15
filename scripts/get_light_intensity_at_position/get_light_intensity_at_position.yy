@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"get_light_intensity_at_position",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"get_light_intensity_at_position",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
