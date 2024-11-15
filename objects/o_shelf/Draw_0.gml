@@ -1,5 +1,3 @@
-depth = o_z
-
 var bottom = 0
 var inner = 1
 var body = 2
@@ -29,7 +27,7 @@ for (var i = 0; i < array_length(sprites); i++) {
     matrix_set(matrix_world, transform_matrix);
 
     // Draw the sprite at the correct position (no changes to x, y, rotation)
-    draw_sprite_ext(sprite_index, sprites[i], 0, 0, 1, 1, 0, c_white, 1);
+    draw_sprite_ext(sprite_index, sprites[i], 0, 0, 1, 1, 0, obj_color, 1);
     
 }
 

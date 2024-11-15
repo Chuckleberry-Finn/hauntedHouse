@@ -47,9 +47,10 @@ texture_set_stage(0, -1);
 // Reset the world matrix after drawing the plane
 matrix_set(matrix_world, matrix_build_identity());
 
+gpu_set_blendmode(bm_add);
 // Then, draw the darkness overlay to simulate lighting effects
 draw_surface(global.darkness_surface, 0, 0);  // Apply darkness map over the room
-
+gpu_set_blendmode(bm_normal);
 
 
 
