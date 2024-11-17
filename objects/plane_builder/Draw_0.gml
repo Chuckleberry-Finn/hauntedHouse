@@ -47,8 +47,10 @@ texture_set_stage(0, -1);
 // Reset the world matrix after drawing the plane
 matrix_set(matrix_world, matrix_build_identity());
 
+//draw_set_alpha(0.5)
 // Then, draw the darkness overlay to simulate lighting effects
 draw_surface(global.darkness_surface, 0, 0);  // Apply darkness map over the room
+//draw_surface_ext(global.darkness_surface, 0, 0, 1, 1, 0, master.shadow_color, 1);  // Apply darkness map over the room
 
 
 

@@ -70,4 +70,19 @@ if (is_moving) {
     } else {
         player.image_angle = target_angle;
     }
+	
+	if (!audio_is_playing(sound_current)) {
+    // Random chance to decide whether a sound should play (e.g., 50% chance)
+    if (random(1) < 0.01) {
+        // Randomly select one sound from the pool of creaky sounds
+        var sound_pool = [snd_creak1, snd_creak2, snd_creak3, snd_creak4]; // Add your sounds to this array
+        var random_sound = sound_pool[irandom(array_length(sound_pool) - 1)];
+        
+        // Play the selected sound
+        audio_play_sound(random_sound, 1, false);
+        
+        // Track the current sound playing
+        sound_current = random_sound;
+    }
+}
 }

@@ -4,6 +4,11 @@ gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
 //gpu_set_cullmode(cull_noculling);
 
+audio_play_sound(snd_ambience, 1, true);
+sound_current = noone;
+
+shadow_color = make_color_rgb(10, 5, 15)
+
 global.view_xy = 45
 
 mouse_dragging = false; // Tracks whether the middle mouse button is being held down
@@ -51,13 +56,16 @@ global.houseHandler.enter_room("north", 0, 0)
 
 global.lights = []
 global.num_lights = 0
-global.darkness_surface = surface_create(room_width, room_height);  // Create surface for the entire room size
-// Initialize the darkness map by clearing it with fully black (darkness)
+
+
+global.darkness_surface = surface_create(room_width, room_height);
 surface_set_target(global.darkness_surface);
-draw_clear_alpha(c_black, 1);  // Fully dark
+draw_clear_alpha(c_black, 0.6);
 surface_reset_target();
 
 
 // Add a new light source to the global lights array
 global.num_lights += 1;
 global.lights[global.num_lights - 1] = instance_create_depth(room_width/2, room_height/2,-5, obj_light);  // Creates a new light source at position (x, y)
+global.num_lights += 1;
+global.lights[global.num_lights - 1] = instance_create_depth(room_width/5, room_height/5,-5, obj_light);  // Creates a new light source at position (x, y)

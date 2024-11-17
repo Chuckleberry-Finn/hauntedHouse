@@ -4,6 +4,7 @@
     {"name":"furniture","order":10,"path":"folders/Objects/furniture.yy",},
     {"name":"handlers","order":9,"path":"folders/Objects/handlers.yy",},
     {"name":"parents","order":8,"path":"folders/Objects/parents.yy",},
+    {"name":"creak","order":6,"path":"folders/Sounds/creak.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"house_handler","order":3,"path":"objects/house_handler/house_handler.yy",},
@@ -21,6 +22,9 @@
     {"name":"get_partial_light_intensity","order":4,"path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},
     {"name":"smoothstep","order":3,"path":"scripts/smoothstep/smoothstep.yy",},
     {"name":"test_move_collide_script","order":2,"path":"scripts/test_move_collide_script/test_move_collide_script.yy",},
+    {"name":"snd_creak2","order":1,"path":"sounds/snd_creak2/snd_creak2.yy",},
+    {"name":"snd_creak3","order":2,"path":"sounds/snd_creak3/snd_creak3.yy",},
+    {"name":"snd_creak4","order":3,"path":"sounds/snd_creak4/snd_creak4.yy",},
     {"name":"floor_hole_texture","order":10,"path":"sprites/floor_hole_texture/floor_hole_texture.yy",},
     {"name":"floor_texture","order":3,"path":"sprites/floor_texture/floor_texture.yy",},
     {"name":"ghost","order":4,"path":"sprites/ghost/ghost.yy",},

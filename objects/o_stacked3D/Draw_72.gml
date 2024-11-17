@@ -30,6 +30,7 @@ for (var i = 0; i < array_length(global.lights); i++) {
     }
 }
 
+
 // Average out the intensity (since we're using 4 corners, we divide by 4)
 total_intensity /= 4;
 
@@ -39,6 +40,18 @@ total_intensity = total_intensity * 255;  // Now intensity is on a scale of 0 to
 // Ensure the intensity stays within the bounds [0, 255]
 total_intensity = clamp(total_intensity, 0, 255);
 
-// Apply the light intensity to the object’s color (make it a grayscale color)
-obj_color = make_color_rgb(total_intensity, total_intensity, total_intensity);
+// Normalize intensity to the range 0-1 for blending (0 = shadow, 1 = white)
+total_intensity /= 255;
 
+// Apply the light intensity to the object’s color (blend between shadow_color and white)
+var _r = color_get_red(master.shadow_color);
+var _g = color_get_green(master.shadow_color);
+var _b = color_get_blue(master.shadow_color);
+
+// Interpolate between the shadow color (black) and white (1,1,1)
+var red_component = lerp(_r, 255, total_intensity);
+var green_component = lerp(_g, 255, total_intensity);
+var blue_component = lerp(_b, 255, total_intensity);
+
+// Create the final color
+obj_color = make_color_rgb(red_component, green_component, blue_component);

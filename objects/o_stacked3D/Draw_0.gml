@@ -12,7 +12,3 @@ for (var i = 0; i < image_number; i++) {
 
 
 matrix_set(matrix_world, matrix_build_identity());
-
-
-
-
