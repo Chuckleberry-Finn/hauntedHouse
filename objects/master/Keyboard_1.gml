@@ -1,3 +1,8 @@
+if (keyboard_check_pressed(vk_escape)) {
+    game_end();  // Exits the game
+	return;
+}
+
 var player = global.player
 if (player == noone) {
     return; // Exit if no player instance is found
