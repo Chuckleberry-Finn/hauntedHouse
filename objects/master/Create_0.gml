@@ -7,6 +7,8 @@ audio_play_sound(snd_ambience, 1, true);
 sound_current = noone;
 
 shadow_color = make_color_rgb(10, 5, 15)
+shadow_alpha = 0.8
+global.weatherHandler = instance_create_depth(-1,-1,-1, weather_handler)
 
 global.view_xy = 45
 

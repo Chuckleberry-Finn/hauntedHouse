@@ -5,6 +5,7 @@ var _z = -r_h*y_scale;
 var _rotX = -90;
 var _rotY = 0;
 var _rotZ = 0;
+p_color = master.shadow_color
 
 if (draw == "east") {
     _x = room_width;
@@ -12,6 +13,7 @@ if (draw == "east") {
 	
 } else if (draw == "west") {
     _y = room_height;
+	
     _rotY = 90;
 
 } else if (draw == "south") {
@@ -41,7 +43,4 @@ draw_surface(_surface, 0, 0);
 
 matrix_set(matrix_world, matrix_build_identity());
 
-
-//draw_set_alpha(0.8)
-//draw_surface(global.darkness_surface, 0, 0);
 draw_surface_ext(global.darkness_surface, 0, 0, 1, 1, 0, c_dkgray, 1);  // Apply darkness map over the room

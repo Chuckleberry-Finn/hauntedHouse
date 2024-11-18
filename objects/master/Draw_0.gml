@@ -1,7 +1,7 @@
 surface_set_target(global.darkness_surface);
 
 // Clear the surface to the shadow color with some alpha for blending
-draw_clear_alpha(shadow_color, 0.8);
+draw_clear_alpha(shadow_color, shadow_alpha);
 
 // Set blending mode to additive, so the lights' colors add up
 gpu_set_blendmode(bm_add);

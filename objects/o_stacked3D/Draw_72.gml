@@ -1,4 +1,3 @@
-var total_intensity = 0;
 var total_red_intensity = 0;
 var total_green_intensity = 0;
 var total_blue_intensity = 0;
@@ -21,10 +20,10 @@ for (var i = 0; i < array_length(global.lights); i++) {
 }
 
 var _r = color_get_red(master.shadow_color);
-var _g = color_get_green(master.shadow_color) ;
+var _g = color_get_green(master.shadow_color);
 var _b = color_get_blue(master.shadow_color);
 
-var alpha = 0.8;
+var alpha = lerp(1, 0.8, master.shadow_alpha)
 var shadow_r = _r * alpha;
 var shadow_g = _g * alpha;
 var shadow_b = _b * alpha;

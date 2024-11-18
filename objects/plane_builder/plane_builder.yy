@@ -31,7 +31,6 @@
     {"$GMObjectProperty":"v1","%Name":"r_h","filters":[],"listItems":[],"multiselect":false,"name":"r_h","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"room_height/2","varType":4,},
     {"$GMObjectProperty":"v1","%Name":"draw","filters":[],"listItems":[],"multiselect":false,"name":"draw","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"north","varType":2,},
     {"$GMObjectProperty":"v1","%Name":"p_texture","filters":[],"listItems":[],"multiselect":false,"name":"p_texture","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"wall_texture","varType":2,},
-    {"$GMObjectProperty":"v1","%Name":"p_color","filters":[],"listItems":[],"multiselect":false,"name":"p_color","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"master.shadow_color","varType":7,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
