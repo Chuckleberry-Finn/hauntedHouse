@@ -190,20 +190,27 @@ function fill_room(_room) {
     var num_objects = irandom_range(2, 5);
 
     for (var i = 0; i < num_objects; i++) {
-        var random_x = irandom_range(32, room_width-32);
-        var random_y = irandom_range(32, room_height-32);
+        var random_x = irandom_range(room_width * 0.1, room_width * 0.9);
+        var random_y = irandom_range(room_height * 0.1, room_height * 0.9);
 
         var random_index = irandom(array_length(object_list) - 1);
         var selected_object = object_list[random_index];
 
+        var sprite_name = string_delete(selected_object, 1, 2);
+
+        var obj_width = sprite_get_width(asset_get_index(sprite_name));
+        var obj_height = sprite_get_height(asset_get_index(sprite_name));
+
+        var adjusted_x = clamp(random_x, obj_width, room_width - obj_width);
+        var adjusted_y = clamp(random_y, obj_height, room_height - obj_height);
+
         var obj_data = ds_map_create();
         ds_map_add(obj_data, "type", selected_object);
-        ds_map_add(obj_data, "x", random_x);
-        ds_map_add(obj_data, "y", random_y);
+        ds_map_add(obj_data, "x", adjusted_x);
+        ds_map_add(obj_data, "y", adjusted_y);
 
         array_push(_room.objects, obj_data);
     }
 
     _room.generated = true;
-    //show_debug_message("Room " + string(_room.room_id) + " filled with objects");
 }

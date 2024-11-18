@@ -1,8 +1,7 @@
-gpu_set_alphatestenable(true); // Enable alpha testing
+gpu_set_alphatestenable(true);
 gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
-//gpu_set_cullmode(cull_noculling);
 
 audio_play_sound(snd_ambience, 1, true);
 sound_current = noone;
@@ -35,10 +34,7 @@ max_rooms = 25;
 num_floors = 1;
 
 global.topWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "north",})
-
-global.the_floor = instance_create_depth(-1,-1,-1, plane_builder, {
-	draw : "the_floor",r_w : room_width/2,r_h : room_height/2})
-	
+global.the_floor = instance_create_depth(-1,-1,-1, plane_builder, {draw : "the_floor", r_h : room_height})
 global.rightWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "east",})
 global.leftWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "west",})
 global.bottomWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "south",})
@@ -53,15 +49,9 @@ show_debug_message("Generated House Map: ", array_length(global.house_map) )
 
 global.houseHandler.enter_room("north", 0, 0)
 
-
 global.lights = []
 global.num_lights = 0
-
-
 global.darkness_surface = surface_create(room_width, room_height);
-surface_set_target(global.darkness_surface);
-draw_clear_alpha(c_black, 0.6);
-surface_reset_target();
 
 
 // Add a new light source to the global lights array
