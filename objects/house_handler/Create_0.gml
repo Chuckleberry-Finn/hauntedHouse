@@ -15,20 +15,17 @@ function create_room(r_id, f_id) {
 function generate_house_map(max_rooms, num_floors) {
     show_debug_message("Generating house map...");
 
-    var house_map = array_create(num_floors, 0); // Local variable for the house map
-	for (var i = 0; i < num_floors; i++) {
-        house_map[i] = []; // Initialize each floor as an empty array
+    var house_map = array_create(num_floors); // Initialize house_map as an array of floors
+
+    // Initialize each floor as an empty array
+    for (var i = 0; i < num_floors; i++) {
+        house_map[i] = []; // Ensure each floor is an array
     }
-	
+
     var room_count = 0;
-    var grid_size = 20;
-    var grid = ds_grid_create(grid_size, grid_size);
-    ds_grid_clear(grid, -1);
+    var grid_size = 20; // Grid size per floor
 
-    // Store the grid in the house handler object
-    global.houseHandler.grid = grid;
-
-    // Define directions as {_x_offset, _y_offset}
+    // Directions for expansion: {_x_offset, _y_offset}
     var directions = [
         {_x: 0, _y: -1}, // North
         {_x: 1, _y: 0},  // East
@@ -36,28 +33,32 @@ function generate_house_map(max_rooms, num_floors) {
         {_x: -1, _y: 0}  // West
     ];
 
-    // Create the first room at the center of the grid, floor 0
+    // Create the first room at the center of the grid, on the first floor (0)
     var start_x = grid_size div 2;
     var start_y = grid_size div 2;
     var current_room = create_room(room_count, 0);
     current_room._x = start_x;
     current_room._y = start_y;
-    grid[# start_x, start_y] = room_count;
 
-	array_push(house_map[0], current_room); // Add the first room to floor 0
+    // Assign a unique room ID to the first room
+    current_room.room_id = room_count;
+
+    house_map[0] = [current_room]; // Initialize floor 0 as an array and add the first room
     room_count++;
 
     // List to store rooms that can be expanded from
     var expandable_rooms = [current_room];
 
+    // Rooms per floor target
+    var target_rooms_per_floor = max_rooms div num_floors;
+    var rooms_on_floor = array_create(num_floors, 0); // Track number of rooms on each floor
+
     while (room_count < max_rooms && array_length(expandable_rooms) > 0) {
-        // Randomly pick a room to expand from
         var index = irandom(array_length(expandable_rooms) - 1);
         var _room = expandable_rooms[index];
 
         randomize();
-        // Shuffle directions for more varied layouts
-        array_shuffle(directions);
+        array_shuffle(directions); // Shuffle directions for varied layouts
         var expanded = false;
 
         // Try to expand in a random direction
@@ -65,108 +66,172 @@ function generate_house_map(max_rooms, num_floors) {
             var dir = directions[i];
             var new_x = _room._x + dir._x;
             var new_y = _room._y + dir._y;
+            var new_floor_id = _room.floor_id;
 
-            // Check if the new coordinates are within bounds and unoccupied
-            if (new_x >= 0 && new_x < grid_size && new_y >= 0 && new_y < grid_size && grid[# new_x, new_y] == -1) {
-                var new_floor_id = _room.floor_id;
+            // Debugging: Print the value of new_floor_id
+            show_debug_message("Attempting to move to new_floor_id: " + string(new_floor_id));
 
-                // Enforce that the room only connects to adjacent floors (not beyond the direct up/down)
-                if (irandom(10) > 8) {
+            // Check if the new coordinates are within bounds and unoccupied on the same floor
+            if (new_x >= 0 && new_x < grid_size && new_y >= 0 && new_y < grid_size) {
+                var valid_position = true;
+                // Check if the room already exists in the current floor
+                for (var room_index = 0; room_index < array_length(house_map[new_floor_id]); room_index++) {
+                    var _otherRoom = house_map[new_floor_id][room_index];
+                    if (_otherRoom._x == new_x && _otherRoom._y == new_y) {
+                        valid_position = false;
+                        break;
+                    }
+                }
+
+                if (valid_position) {
                     // Only allow moving up to the next floor (adjacent floor) if possible
-                    if (new_floor_id < num_floors - 1) {
-                        new_floor_id++; // Move the room to the next floor (upwards)
+                    if (rooms_on_floor[new_floor_id] >= target_rooms_per_floor) {
+                        if (new_floor_id < num_floors - 1) {
+                            new_floor_id++; // Move to the next floor, but check that it doesn't exceed bounds
+                        }
+                    } else if (rooms_on_floor[new_floor_id] > target_rooms_per_floor) {
+                        if (new_floor_id > 0) {
+                            new_floor_id--; // Move to the previous floor, but check that it doesn't go below 0
+                        }
                     }
-                } else if (irandom(10) < 2) {
-                    // Only allow moving down to the previous floor if possible
-                    if (new_floor_id > 0) {
-                        new_floor_id--; // Move the room to the previous floor (downwards)
+
+                    // Debugging: Print the value of new_floor_id after modification
+                    show_debug_message("After modification, new_floor_id is: " + string(new_floor_id));
+
+                    // Ensure new_floor_id is within bounds before proceeding
+                    if (new_floor_id >= 0 && new_floor_id < num_floors) {
+                        // Create the new room
+                        var new_room = create_room(room_count, new_floor_id);
+                        new_room._x = new_x;
+                        new_room._y = new_y;
+
+                        // Assign a unique room ID to the new room
+                        new_room.room_id = room_count;
+
+                        // Add room to the house map for the correct floor
+                        array_push(house_map[new_floor_id], new_room); // Add room to the house map
+                        room_count++;
+                        rooms_on_floor[new_floor_id]++; // Increment room count for the floor
+
+                        // Track room connections
+                        var connection_dir = i;
+                        var opposite_dir = (i + 2) % 4;
+
+                        _room.connected_room_ids[connection_dir] = new_room.room_id;
+                        new_room.connected_room_ids[opposite_dir] = _room.room_id;
+
+                        _room.texture_of_walls[connection_dir] = "wall_door_texture";
+                        new_room.texture_of_walls[opposite_dir] = "wall_door_texture";
+
+                        // Add new room to expandable rooms
+                        array_push(expandable_rooms, new_room);
+                        expanded = true;
+                        break;
+                    } else {
+                        // Debugging: Print the error if new_floor_id is out of bounds
+                        show_debug_message("ERROR: new_floor_id is out of bounds: " + string(new_floor_id));
                     }
                 }
-
-                var new_room = create_room(room_count, new_floor_id);
-                new_room._x = new_x;
-                new_room._y = new_y;
-
-                // Ensure there's space in the house map for this new room
-                if (house_map[new_floor_id] == undefined) {
-                    house_map[new_floor_id] = []; // Initialize the floor if not already done
-                }
-
-                // Add the new room to the house map and grid
-				array_push(house_map[new_floor_id], new_room);
-                grid[# new_x, new_y] = room_count;
-                room_count++;
-
-                // Establish connections between rooms
-                var connection_dir = i;
-                var opposite_dir = (i + 2) % 4;
-
-                _room.connected_room_ids[connection_dir] = new_room.room_id;
-                new_room.connected_room_ids[opposite_dir] = _room.room_id;
-
-                // Assign door textures for connected walls
-                _room.texture_of_walls[connection_dir] = "wall_door_texture";
-                new_room.texture_of_walls[opposite_dir] = "wall_door_texture";
-
-                // Add the new room to the list of expandable rooms
-                array_push(expandable_rooms, new_room);
-                expanded = true;
-                break;
             }
         }
 
-        // If no expansion was possible from this room, remove it from the list
+        // Remove room from expandable list if no expansion was possible
         if (!expanded) {
             array_delete(expandable_rooms, index, 1);
         }
     }
 
+    // Ensure at least two connections per floor across floors
+    for (var i = 0; i < num_floors - 1; i++) {
+        // Get rooms for the floor above and below
+        var floor_rooms = house_map[i];
+        var next_floor_rooms = house_map[i + 1];
+        var connection_count = 0;
+
+        // Connect rooms across floors with at least 2 connections
+        while (connection_count < 2) {
+            var room1 = floor_rooms[irandom(array_length(floor_rooms) - 1)];
+            var room2 = next_floor_rooms[irandom(array_length(next_floor_rooms) - 1)];
+
+            // Ensure rooms aren't already connected
+            var already_connected = false;
+
+            // Check if the room ID is already in the connected_room_ids array
+            for (var j = 0; j < array_length(room1.connected_room_ids); j++) {
+                if (room1.connected_room_ids[j] == room2.room_id) {
+                    already_connected = true;
+                    break; // Exit loop once connection is found
+                }
+            }
+
+            // If not connected, establish the connection
+            if (!already_connected) {
+                room1.connected_room_ids[irandom(3)] = room2.room_id;
+                room2.connected_room_ids[irandom(3)] = room1.room_id;
+                connection_count++;
+            }
+        }
+    }
+
     show_debug_message("House map generated successfully!");
-    return house_map; // Return the generated house map
+    return house_map;
 }
 
 
-// Enters a room, supports floor transitions
-function enter_room(door, room_id, floor_id) {
-    show_debug_message("Entering room " + string(room_id) + " on floor " + string(floor_id));
 
-    if (array_length(global.house_map) <= floor_id || !is_array(global.house_map[floor_id])) {
-        show_debug_message("Error: Floor " + string(floor_id) + " does not exist.");
-        return;
+
+// Enters a room, supports floor transitions
+function enter_room(door, room_id) {
+    show_debug_message("Entering room " + string(room_id));
+
+    var found_room = undefined;
+
+    // Search through all floors for the room
+    for (var floor_id = 0; floor_id < array_length(global.house_map); floor_id++) {
+        for (var i = 0; i < array_length(global.house_map[floor_id]); i++) {
+            var _room = global.house_map[floor_id][i];
+            if (_room.room_id == room_id) {
+                found_room = _room;
+                break;
+            }
+        }
+        if (found_room != undefined) break;
     }
 
-    if (array_length(global.house_map[floor_id]) <= room_id || global.house_map[floor_id][room_id] == undefined) {
+    if (found_room == undefined) {
         show_debug_message("Error: Room " + string(room_id) + " does not exist.");
         return;
     }
 
-    var _room = global.house_map[floor_id][room_id];
     show_debug_message("Room loaded successfully");
 
     var player = global.player;
 
+    // Destroy any other instances that are not the player or lighting objects
     with (all) {
         if (object_index != obj_light && id != player && !(x == -1 && y == -1)) {
             instance_destroy();
         }
     }
 
-    if (!_room.generated) {
-        fill_room(_room);
+    // If the room hasn't been generated, generate it
+    if (!found_room.generated) {
+        fill_room(found_room);
     }
 
-    // Set wall textures
-    global.topWall.p_texture = _room.texture_of_walls[0];
-    global.rightWall.p_texture = _room.texture_of_walls[1];
-    global.bottomWall.p_texture = _room.texture_of_walls[2];
-    global.leftWall.p_texture = _room.texture_of_walls[3];
+    // Set wall textures based on the room
+    global.topWall.p_texture = found_room.texture_of_walls[0];
+    global.rightWall.p_texture = found_room.texture_of_walls[1];
+    global.bottomWall.p_texture = found_room.texture_of_walls[2];
+    global.leftWall.p_texture = found_room.texture_of_walls[3];
 
     // Set floor texture
-    global.the_floor.p_texture = _room.texture_of_floor;
+    global.the_floor.p_texture = found_room.texture_of_floor;
 
-    global.current_room = _room;
+    // Update the current room in global state
+    global.current_room = found_room;
 
-    // Position player near the door they entered from
+    // Handle player positioning based on the door they entered through
     switch (door) {
         case "north":
             player.x = room_width / 2;
@@ -185,7 +250,14 @@ function enter_room(door, room_id, floor_id) {
             player.y = room_height / 2;
             break;
     }
+
+    // If the player has entered a room on a new floor, ensure the transition is handled
+    if (global.current_room.floor_id != floor_id) {
+        show_debug_message("Floor transition: " + string(floor_id) + " to " + string(global.current_room.floor_id));
+    }
 }
+
+
 
 // Fills room with random objects
 function fill_room(_room) {
