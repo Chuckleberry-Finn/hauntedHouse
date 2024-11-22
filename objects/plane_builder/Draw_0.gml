@@ -31,6 +31,8 @@ if (draw == "east") {
 
 var _texture = asset_get_index(p_texture);
 
+if !surface_exists(_surface) { _surface = surface_create(room_width, room_height); }
+
 surface_set_target(_surface); 
 draw_clear_alpha(c_white, 0); 
 draw_sprite_stretched_ext(_texture, 1, 0, 0, r_w, r_h*y_scale, p_color, 1);
@@ -41,6 +43,8 @@ matrix_set(matrix_world, mat);
 draw_surface(_surface, 0, 0);
 
 matrix_set(matrix_world, matrix_build_identity());
+
+if !surface_exists(global.darkness_surface) { global.darkness_surface = surface_create(room_width, room_height); }
 
 draw_surface_ext(global.darkness_surface, 0, 0, 1, 1, 0, c_dkgray, 1);
 // Apply darkness map over the room

@@ -1,3 +1,5 @@
+if !surface_exists(global.darkness_surface) { global.darkness_surface = surface_create(room_width, room_height); }
+
 surface_set_target(global.darkness_surface);
 
 draw_clear_alpha(shadow_color, shadow_alpha);
