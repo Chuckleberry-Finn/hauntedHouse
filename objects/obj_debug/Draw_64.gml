@@ -20,89 +20,86 @@ var offset_x = display_get_gui_width() - minimap_width - gap_from_right;
 var current_room = global.current_room;
 var grid = global.houseHandler.grid;
 
-// Iterate through the grid to draw the minimap
-for (var _y = 0; _y < grid_size; _y++) {
-    for (var _x = 0; _x < grid_size; _x++) {
-        // Calculate the screen position for this cell
-        var screen_x = offset_x + _x * (room_size + padding);
-        var screen_y = offset_y + _y * (room_size + padding);
+// Draw the room square (8x8) without gaps
+draw_set_alpha(0.8);
 
-        // Check if a room exists at this grid location
-        var room_id = grid[# _x, _y];
+// Iterate through each floor to draw the minimap
+var floor_offset_y = offset_y; // Starting Y offset for the top floor
+for (var _floor = 0; _floor < array_length(global.house_map); _floor++) {
+    var floor_rooms = global.house_map[_floor];
 
-        if (room_id != -1) {
-            var _room = global.house_map[0][room_id];
+    // Draw the rooms of the current floor
+    for (var _y = 0; _y < grid_size; _y++) {
+        for (var _x = 0; _x < grid_size; _x++) {
+            // Calculate the screen position for this cell
+            var screen_x = offset_x + _x * (room_size + padding);
+            var screen_y = floor_offset_y + _y * (room_size + padding);
 
-            // Set color based on whether this is the current room
-            if (_room == current_room) {
-                draw_set_color(c_lime); // Draw current room in lime green
-            } else {
-                draw_set_color(c_white); // Draw other rooms in white
+            // Check if a room exists at this grid location on the current floor
+            var room_id = grid[# _x, _y];
+
+            if (room_id != -1 && room_id < array_length(floor_rooms)) {
+                var _room = floor_rooms[room_id];
+
+                // Set color based on whether this is the current room's floor
+                if (_room == current_room) {
+                    draw_set_color(c_lime); // Draw current room in lime green
+                } else {
+                    draw_set_color(c_gray); // Draw other rooms in gray
+                }
+
+                // Darken the rooms that are not on the current floor
+                if (_room.floor_id != _floor) {
+                    draw_set_color(c_dkgray); // Dark gray for rooms on different floors
+                }
+
+                draw_rectangle(screen_x, screen_y, screen_x + room_size, screen_y + room_size, false);
             }
+        }
+    }
+	draw_set_alpha(1); // Reset alpha
+	
+    // Draw connection lines between rooms after all rooms have been drawn
+    for (var _y = 0; _y < grid_size; _y++) {
+        for (var _x = 0; _x < grid_size; _x++) {
+            var room_id = grid[# _x, _y];
+            if (room_id != -1 && room_id < array_length(floor_rooms)) {
+                var _room = floor_rooms[room_id];
 
-            // Draw the room square
-            draw_set_alpha(0.8);
-            draw_rectangle(screen_x, screen_y, screen_x + room_size, screen_y + room_size, false);
+                var directions = [
+                    {_x: 0, _y: -1}, // North
+                    {_x: 1, _y: 0},  // East
+                    {_x: 0, _y: 1},  // South
+                    {_x: -1, _y: 0}  // West
+                ];
 
-            // Draw connection squares centered in the gap between rooms
-            draw_set_alpha(0.5); // 60% transparency for connections
-            var directions = [
-                {_x: 0, _y: -1}, // North
-                {_x: 1, _y: 0},  // East
-                {_x: 0, _y: 1},  // South
-                {_x: -1, _y: 0}  // West
-            ];
+                for (var d = 0; d < 4; d++) {
+                    var connected_room_id = _room.connected_room_ids[d];
+                    if (connected_room_id != undefined && connected_room_id >= 0) { // Check if the ID is valid
+                        // Check if the connected room exists within the floor's room array
+                        if (connected_room_id < array_length(floor_rooms)) {
+                            var connected_room = floor_rooms[connected_room_id];
+                            if (connected_room != undefined) {
+                                // Calculate the position of the connected room
+                                var connected_x = offset_x + connected_room._x * (room_size + padding);
+                                var connected_y = floor_offset_y + connected_room._y * (room_size + padding);
 
-            for (var d = 0; d < 4; d++) {
-                var connected_room_id = _room.connected_room_ids[d];
-                if (connected_room_id != undefined) {
-                    var connected_room = global.house_map[_room.floor_id][connected_room_id];
-                    if (connected_room != undefined) {
-                        // Calculate the position of the connected room
-                        var connected_x = offset_x + connected_room._x * (room_size + padding);
-                        var connected_y = offset_y + connected_room._y * (room_size + padding);
-
-                        // Draw the connection square centered within the gap
-                        draw_set_color(c_white);
-
-                        // Adjust connection square to be fully within the gap, not overlapping rooms
-                        if (d == 0) { // North
-                            draw_rectangle(
-                                screen_x + (room_size / 2) - (padding / 2),
-                                screen_y - (padding / 2) - 1,
-                                screen_x + (room_size / 2) + (padding / 2),
-                                screen_y - (padding / 2) + 1,
-                                false
-                            );
-                        } else if (d == 1) { // East
-                            draw_rectangle(
-                                screen_x + room_size + (padding / 2) - 1,
-                                screen_y + (room_size / 2) - (padding / 2),
-                                screen_x + room_size + (padding / 2) + 1,
-                                screen_y + (room_size / 2) + (padding / 2),
-                                false
-                            );
-                        } else if (d == 2) { // South
-                            draw_rectangle(
-                                screen_x + (room_size / 2) - (padding / 2),
-                                screen_y + room_size + (padding / 2) - 1,
-                                screen_x + (room_size / 2) + (padding / 2),
-                                screen_y + room_size + (padding / 2) + 1,
-                                false
-                            );
-                        } else if (d == 3) { // West
-                            draw_rectangle(
-                                screen_x - (padding / 2) - 1,
-                                screen_y + (room_size / 2) - (padding / 2),
-                                screen_x - (padding / 2) + 1,
-                                screen_y + (room_size / 2) + (padding / 2),
-                                false
-                            );
+                                // Calculate the center of the current room and the connected room
+                                var start_x = offset_x + _room._x * (room_size + padding) + room_size / 2;
+                                var start_y = floor_offset_y + _room._y * (room_size + padding) + room_size / 2;
+                                var end_x = connected_x + room_size / 2;
+                                var end_y = connected_y + room_size / 2;
+								
+                                // Draw a line from the center of the current room to the connected room
+                                draw_arrow(start_x, start_y, end_x, end_y, 2)//, 2, c_white, c_white); // Draw the connection line
+                            }
                         }
                     }
                 }
             }
         }
-        draw_set_alpha(1); // Reset alpha
     }
+
+    // Move the offset down for the next floor
+    floor_offset_y += grid_size * (room_size + padding) + padding;
 }

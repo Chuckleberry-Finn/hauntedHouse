@@ -5,18 +5,21 @@ function create_room(r_id, f_id) {
         connected_room_ids: [undefined, undefined, undefined, undefined], // [north, east, south, west]
         texture_of_walls: ["wall_texture", "wall_texture", "wall_texture", "wall_texture"], // Default textures for each wall
         texture_of_floor: "floor_texture", // Default floor texture
-		hole_in_floor: false,
+        hole_in_floor: false,
         generated: false,
         objects: []
     };
 }
 
-//enter_room("north", current_room_id, current_floor_id);
 
 function generate_house_map(max_rooms, num_floors) {
     show_debug_message("Generating house map...");
+
+    var house_map = array_create(num_floors, 0); // Local variable for the house map
+	for (var i = 0; i < num_floors; i++) {
+        house_map[i] = []; // Initialize each floor as an empty array
+    }
 	
-    global.house_map = [];
     var room_count = 0;
     var grid_size = 20;
     var grid = ds_grid_create(grid_size, grid_size);
@@ -33,14 +36,15 @@ function generate_house_map(max_rooms, num_floors) {
         {_x: -1, _y: 0}  // West
     ];
 
-    // Create the first room at the center of the grid
+    // Create the first room at the center of the grid, floor 0
     var start_x = grid_size div 2;
     var start_y = grid_size div 2;
     var current_room = create_room(room_count, 0);
     current_room._x = start_x;
     current_room._y = start_y;
     grid[# start_x, start_y] = room_count;
-    global.house_map[0] = [current_room];
+
+	array_push(house_map[0], current_room); // Add the first room to floor 0
     room_count++;
 
     // List to store rooms that can be expanded from
@@ -51,7 +55,7 @@ function generate_house_map(max_rooms, num_floors) {
         var index = irandom(array_length(expandable_rooms) - 1);
         var _room = expandable_rooms[index];
 
-		randomize();
+        randomize();
         // Shuffle directions for more varied layouts
         array_shuffle(directions);
         var expanded = false;
@@ -64,22 +68,36 @@ function generate_house_map(max_rooms, num_floors) {
 
             // Check if the new coordinates are within bounds and unoccupied
             if (new_x >= 0 && new_x < grid_size && new_y >= 0 && new_y < grid_size && grid[# new_x, new_y] == -1) {
-                // Create a new room
-                var new_room = create_room(room_count, _room.floor_id);
+                var new_floor_id = _room.floor_id;
+
+                // Enforce that the room only connects to adjacent floors (not beyond the direct up/down)
+                if (irandom(10) > 8) {
+                    // Only allow moving up to the next floor (adjacent floor) if possible
+                    if (new_floor_id < num_floors - 1) {
+                        new_floor_id++; // Move the room to the next floor (upwards)
+                    }
+                } else if (irandom(10) < 2) {
+                    // Only allow moving down to the previous floor if possible
+                    if (new_floor_id > 0) {
+                        new_floor_id--; // Move the room to the previous floor (downwards)
+                    }
+                }
+
+                var new_room = create_room(room_count, new_floor_id);
                 new_room._x = new_x;
                 new_room._y = new_y;
 
                 // Ensure there's space in the house map for this new room
-                if (array_length(global.house_map[_room.floor_id]) <= room_count) {
-                    array_resize(global.house_map[_room.floor_id], room_count + 1);
+                if (house_map[new_floor_id] == undefined) {
+                    house_map[new_floor_id] = []; // Initialize the floor if not already done
                 }
 
                 // Add the new room to the house map and grid
-                global.house_map[_room.floor_id][room_count] = new_room;
+				array_push(house_map[new_floor_id], new_room);
                 grid[# new_x, new_y] = room_count;
                 room_count++;
 
-                // Establish connections
+                // Establish connections between rooms
                 var connection_dir = i;
                 var opposite_dir = (i + 2) % 4;
 
@@ -104,11 +122,11 @@ function generate_house_map(max_rooms, num_floors) {
     }
 
     show_debug_message("House map generated successfully!");
-    return global.house_map;
+    return house_map; // Return the generated house map
 }
 
 
-
+// Enters a room, supports floor transitions
 function enter_room(door, room_id, floor_id) {
     show_debug_message("Entering room " + string(room_id) + " on floor " + string(floor_id));
 
@@ -125,7 +143,7 @@ function enter_room(door, room_id, floor_id) {
     var _room = global.house_map[floor_id][room_id];
     show_debug_message("Room loaded successfully");
 
-	var player =  global.player
+    var player = global.player;
 
     with (all) {
         if (object_index != obj_light && id != player && !(x == -1 && y == -1)) {
@@ -148,40 +166,28 @@ function enter_room(door, room_id, floor_id) {
 
     global.current_room = _room;
 
-    //show_debug_message("Textures set. Placing objects...");
-
-	global.current_room_objs = []
-    for (var i = 0; i < array_length(_room.objects); i++) {
-        var obj_data = _room.objects[i];
-        var obj_type = asset_get_index(obj_data[? "type"]);
-        if (obj_type != -1) {
-            var o = instance_create_layer(obj_data[? "x"], obj_data[? "y"], "Instances", obj_type);
-			array_push(global.current_room_objs, o);
-		}
-    }
-	
-	// Position player near the door they entered from
+    // Position player near the door they entered from
     switch (door) {
         case "north":
-			player.x = room_width / 2;
+            player.x = room_width / 2;
             player.y = room_height - 50;
             break;
         case "south":
-			player.x = room_width / 2;
+            player.x = room_width / 2;
             player.y = 50;
             break;
         case "east":
-			player.x = 50;
+            player.x = 50;
             player.y = room_height / 2;
             break;
         case "west":
-			player.x = room_width - 50;
+            player.x = room_width - 50;
             player.y = room_height / 2;
             break;
     }
 }
 
-
+// Fills room with random objects
 function fill_room(_room) {
     show_debug_message("Filling room " + string(_room.room_id));
     var object_list = ["o_plant", "o_stool", "o_rug1", "o_shelf"];
