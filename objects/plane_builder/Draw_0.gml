@@ -38,6 +38,7 @@ draw_clear_alpha(c_white, 0);
 draw_sprite_stretched_ext(_texture, 1, 0, 0, r_w, r_h*y_scale, p_color, 1);
 surface_reset_target();
 
+
 var mat = matrix_build(_x, _y, _z, _rotX, _rotY, _rotZ, 1, 1, 1);
 matrix_set(matrix_world, mat);
 draw_surface(_surface, 0, 0);

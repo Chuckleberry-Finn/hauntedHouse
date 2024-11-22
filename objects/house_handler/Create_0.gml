@@ -5,9 +5,7 @@ function create_room(r_id, f_id) {
         connected_room_ids: [undefined, undefined, undefined, undefined], // [north, east, south, west]
         texture_of_walls: ["wall_texture", "wall_texture", "wall_texture", "wall_texture"], // Default textures for each wall
         texture_of_floor: "floor_texture", // Default floor texture
-        stairs_up: false,
-        stairs_down: false,
-        hole_in_floor: false,
+		hole_in_floor: false,
         generated: false,
         objects: []
     };
