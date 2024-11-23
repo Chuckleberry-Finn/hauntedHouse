@@ -79,7 +79,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
             if (abs(new_x - room_width / 2) < center_threshold && is_facing_direction(270)) {
                 if (global.current_room.connected_room_ids[0] != undefined) {
                     show_debug_message("Going through the north door");
-                    global.houseHandler.enter_room("north", global.current_room.connected_room_ids[0], global.current_room.floor_id);
+                    global.houseHandler.enter_room("north", global.current_room.connected_room_ids[0]);
                     return;
                 }
             }
@@ -92,7 +92,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
             if (abs(new_x - room_width / 2) < center_threshold && is_facing_direction(90)) {
                 if (global.current_room.connected_room_ids[2] != undefined) {
                     show_debug_message("Going through the south door");
-                    global.houseHandler.enter_room("south", global.current_room.connected_room_ids[2], global.current_room.floor_id);
+                    global.houseHandler.enter_room("south", global.current_room.connected_room_ids[2]);
                     return;
                 }
             }
@@ -105,7 +105,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
             if (abs(new_y - room_height / 2) < center_threshold && is_facing_direction(180)) {
                 if (global.current_room.connected_room_ids[1] != undefined) {
                     show_debug_message("Going through the east door");
-                    global.houseHandler.enter_room("east", global.current_room.connected_room_ids[1], global.current_room.floor_id);
+                    global.houseHandler.enter_room("east", global.current_room.connected_room_ids[1]);
                     return;
                 }
             }
@@ -118,7 +118,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
             if (abs(new_y - room_height / 2) < center_threshold && is_facing_direction(0.5)) {
                 if (global.current_room.connected_room_ids[3] != undefined) {
                     show_debug_message("Going through the west door");
-                    global.houseHandler.enter_room("west", global.current_room.connected_room_ids[3], global.current_room.floor_id);
+                    global.houseHandler.enter_room("west", global.current_room.connected_room_ids[3]);
                     return;
                 }
             }
