@@ -53,10 +53,10 @@ for (var _floor = 0; _floor < array_length(house_map); _floor++) {
     }
 
     // Set a more faded alpha for floor-to-floor connections
-    draw_set_alpha(0.3); // Lower alpha for floor-to-floor connections
-
+    draw_set_alpha(0.9); // Lower alpha for floor-to-floor connections
     // Draw connection lines between rooms, including cross-floor connections
     draw_set_color(c_gray);
+	
     for (var room_index = 0; room_index < array_length(floor_rooms); room_index++) {
         var _room = floor_rooms[room_index];
 

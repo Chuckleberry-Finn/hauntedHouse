@@ -285,6 +285,16 @@ function enter_room(door, room_id) {
     // Update the current room in global state
     global.current_room = found_room;
 
+	global.current_room_objs = []
+    for (var i = 0; i < array_length(_room.objects); i++) {
+        var obj_data = _room.objects[i];
+        var obj_type = asset_get_index(obj_data[? "type"]);
+        if (obj_type != -1) {
+            var o = instance_create_layer(obj_data[? "x"], obj_data[? "y"], "Instances", obj_type);
+			array_push(global.current_room_objs, o);
+		}
+    }
+
     // Handle player positioning based on the door they entered through
     switch (door) {
         case "north":
