@@ -56,7 +56,7 @@ for (var _floor = 0; _floor < array_length(house_map); _floor++) {
     draw_set_alpha(0.9); // Lower alpha for floor-to-floor connections
     // Draw connection lines between rooms, including cross-floor connections
     draw_set_color(c_gray);
-	
+    
     for (var room_index = 0; room_index < array_length(floor_rooms); room_index++) {
         var _room = floor_rooms[room_index];
 
@@ -88,6 +88,15 @@ for (var _floor = 0; _floor < array_length(house_map); _floor++) {
                     var start_y = floor_offset_y + _room._y * (room_size + padding) + room_size / 2;
                     var end_x = connected_x + room_size / 2;
                     var end_y = connected_y + room_size / 2;
+
+                    // Set color for the connection arrow
+                    if (_room.floor_id == connected_floor) {
+                        draw_set_alpha(0.9)
+						draw_set_color(c_ltgray); // Light gray for connections on the same floor
+                    } else {
+                        draw_set_alpha(0.6)
+						draw_set_color(c_aqua); // Cyan for connections between floors
+                    }
 
                     // Draw a line from the center of the current room to the connected room
                     draw_arrow(start_x, start_y, end_x, end_y, 2); // Draw the connection line
