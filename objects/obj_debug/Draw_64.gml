@@ -79,11 +79,41 @@ for (var _floor = 0; _floor < array_length(house_map); _floor++) {
                     var connected_x = offset_x + connected_room._x * (room_size + padding);
                     var connected_y = offset_y + (connected_floor * (grid_size * (room_size + padding) + padding)) + connected_room._y * (room_size + padding);
 
+					//connected_room_ids: [undefined, undefined, undefined, undefined],
+					// [north, east, south, west]
+					var con_dir_offset_x = 0
+					var con_dir_offset_y = 0
+
+				/*
+					switch (d) {
+                        case 0: // North (top)
+							con_dir_offset_x = 0
+							con_dir_offset_y = room_size/2
+                            break;
+
+                        case 1: // East (right)
+							con_dir_offset_x = room_size
+							con_dir_offset_y = 0
+                            break;
+
+                        case 2: // South (bottom)
+							con_dir_offset_x = 0
+							con_dir_offset_y = -room_size
+                            break;
+
+                        case 3: // West (left)
+							con_dir_offset_x = 0//-room_siz
+							con_dir_offset_y = 0
+                            break;
+                    }
+				*/	
                     // Calculate the center of the current room and the connected room
-                    var start_x = offset_x + _room._x * (room_size + padding) + room_size / 2;
-                    var start_y = floor_offset_y + _room._y * (room_size + padding) + room_size / 2;
-                    var end_x = connected_x + room_size / 2;
-                    var end_y = connected_y + room_size / 2;
+                    var start_x = offset_x + _room._x * (room_size + padding) + (room_size/2) + con_dir_offset_x ;
+                    var start_y = floor_offset_y + _room._y * (room_size + padding) + (room_size/2) + con_dir_offset_y;
+					
+					
+                    var end_x = connected_x + (room_size/2 - con_dir_offset_x);
+                    var end_y = connected_y + (room_size/2) - con_dir_offset_x;
 
                     // Set color for the connection arrow
                     if (_room.floor_id == connected_floor) {
