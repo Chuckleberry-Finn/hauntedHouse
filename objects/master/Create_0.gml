@@ -32,7 +32,7 @@ instance_create_depth(-1,-1,-1, obj_debug)
 global.player = instance_create_depth(room_width/2,50,0, o_person)
 
 grid_size = 20;
-max_rooms = 25;
+max_rooms = 150;
 num_floors = 3;
 
 global.topWall = instance_create_depth(-1,-1,-1, plane_builder, {draw : "north",})
