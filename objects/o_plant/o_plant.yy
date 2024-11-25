@@ -10,8 +10,8 @@
     "path":"folders/Objects/furniture.yy",
   },
   "parentObjectId":{
-    "name":"o_stacked3D",
-    "path":"objects/o_stacked3D/o_stacked3D.yy",
+    "name":"o_furniture",
+    "path":"objects/o_furniture/o_furniture.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

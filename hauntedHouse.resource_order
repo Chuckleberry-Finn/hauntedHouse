@@ -8,6 +8,9 @@
   ],
   "ResourceOrderSettings":[
     {"name":"house_handler","order":3,"path":"objects/house_handler/house_handler.yy",},
+    {"name":"o_furniture","order":3,"path":"objects/o_furniture/o_furniture.yy",},
+    {"name":"o_mouse","order":2,"path":"objects/o_mouse/o_mouse.yy",},
+    {"name":"o_npc","order":2,"path":"objects/o_npc/o_npc.yy",},
     {"name":"o_person","order":1,"path":"objects/o_person/o_person.yy",},
     {"name":"o_plant","order":1,"path":"objects/o_plant/o_plant.yy",},
     {"name":"o_rug1","order":4,"path":"objects/o_rug1/o_rug1.yy",},
@@ -31,6 +34,7 @@
     {"name":"floor_texture","order":3,"path":"sprites/floor_texture/floor_texture.yy",},
     {"name":"ghost","order":4,"path":"sprites/ghost/ghost.yy",},
     {"name":"gui","order":5,"path":"sprites/gui/gui.yy",},
+    {"name":"mouse","order":16,"path":"sprites/mouse/mouse.yy",},
     {"name":"person","order":8,"path":"sprites/person/person.yy",},
     {"name":"plant","order":7,"path":"sprites/plant/plant.yy",},
     {"name":"rug1","order":14,"path":"sprites/rug1/rug1.yy",},

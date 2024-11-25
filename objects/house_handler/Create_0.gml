@@ -340,7 +340,7 @@ function enter_room(door, room_id) {
 // Fills room with random objects
 function fill_room(_room) {
     show_debug_message("Filling room " + string(_room.room_id));
-    var object_list = ["o_plant", "o_stool", "o_rug1", "o_shelf"];
+    var object_list = ["o_plant", "o_stool", "o_rug1", "o_shelf", "o_mouse"];
     var num_objects = irandom_range(2, 5);
 
     for (var i = 0; i < num_objects; i++) {

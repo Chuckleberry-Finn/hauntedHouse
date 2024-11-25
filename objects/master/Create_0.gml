@@ -57,8 +57,4 @@ global.darkness_surface = surface_create(room_width, room_height);
 
 // Add a new light source to the global lights array
 global.num_lights += 1;
-global.lights[global.num_lights - 1] = instance_create_depth(room_width/2, room_height/2, -5, obj_light, {light_color : make_color_rgb(255, 230, 190)});
-global.num_lights += 1;
-global.lights[global.num_lights - 1] = instance_create_depth(room_width/5, room_height/5, -5, obj_light, {light_color : make_color_rgb(255, 230, 190)});
-global.num_lights += 1;
-global.lights[global.num_lights - 1] = instance_create_depth(room_width*0.75, room_height*0.75, -5, obj_light, {light_color : make_color_rgb(255, 230, 190)});
+global.lights[global.num_lights - 1] = instance_create_depth(room_width/2, room_height/2, -5, obj_light, {range : 400, light_color : make_color_rgb(255, 230, 190)});
