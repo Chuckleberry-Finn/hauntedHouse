@@ -113,7 +113,7 @@ if (_target_corner != noone) {
     image_angle = _scurry_dir + 90;
 
     // Check if the mouse has reached the target corner
-    if (point_distance(x, y, _corner_x, _corner_y) < 2) {
+    if (point_distance(x, y, _corner_x, _corner_y) < _edge_distance) {
 		
 		for (var i = 0; i < array_length(global.current_room.objects); i++) {
 		    var obj_data = global.current_room.objects[i];
