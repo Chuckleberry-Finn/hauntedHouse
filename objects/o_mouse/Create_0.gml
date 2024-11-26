@@ -9,3 +9,5 @@ _recalculate_threshold = 50;     // Threshold for recalculating the target corne
 // Direction and targeting
 _target_corner = noone;          // The target corner
 _scurry_dir = 0;                 // Current direction of movement
+
+_current_sound = noone;
