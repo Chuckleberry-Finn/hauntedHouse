@@ -130,7 +130,7 @@ if (_target_corner != noone) {
 
 	if (!audio_is_playing(_current_sound)) {
 	    // Random chance to decide whether a sound should play (e.g., 50% chance)
-	    if (random(1) < 0.05) {
+	    if (random(1) < 0.04) {
 	        // Randomly select one sound from the pool of creaky sounds
 	        var sound_pool = [snd_mouse1, snd_mouse2, snd_mouse3, snd_mouse4, snd_mouse5, snd_mouse6]; // Add your sounds to this array
 	        var random_sound = sound_pool[irandom(array_length(sound_pool) - 1)];
