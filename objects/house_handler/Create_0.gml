@@ -309,6 +309,8 @@ function enter_room(door, room_id) {
 		}
     }
 
+	player.room_id = room_id;
+
     // Handle player positioning based on the door they entered through
     switch (door) {
         case "north":
@@ -328,6 +330,15 @@ function enter_room(door, room_id) {
             player.y = room_height / 2;
             break;
     }
+
+    var buffer = buffer_create(256, buffer_grow, 1);
+    buffer_write(buffer, buffer_u8, 4); // Event type: Player room transition
+    buffer_write(buffer, buffer_u32, player.id);
+    buffer_write(buffer, buffer_u32, player.room_id);
+    buffer_write(buffer, buffer_f32, player.x);
+    buffer_write(buffer, buffer_f32, player.y);
+    network_broadcast_all(buffer);
+    buffer_delete(buffer);
 
     // If the player has entered a room on a new floor, ensure the transition is handled
     if (global.current_room.floor_id != floor_id) {

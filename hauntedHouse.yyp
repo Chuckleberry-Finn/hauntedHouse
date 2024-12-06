@@ -39,6 +39,7 @@
   },
   "name":"hauntedHouse",
   "resources":[
+    {"id":{"name":"client_handler","path":"objects/client_handler/client_handler.yy",},},
     {"id":{"name":"house_handler","path":"objects/house_handler/house_handler.yy",},},
     {"id":{"name":"master","path":"objects/master/master.yy",},},
     {"id":{"name":"o_billboardObj","path":"objects/o_billboardObj/o_billboardObj.yy",},},
@@ -57,6 +58,7 @@
     {"id":{"name":"obj_debug","path":"objects/obj_debug/obj_debug.yy",},},
     {"id":{"name":"obj_light","path":"objects/obj_light/obj_light.yy",},},
     {"id":{"name":"plane_builder","path":"objects/plane_builder/plane_builder.yy",},},
+    {"id":{"name":"server_handler","path":"objects/server_handler/server_handler.yy",},},
     {"id":{"name":"weather_handler","path":"objects/weather_handler/weather_handler.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"camera_update_script","path":"scripts/camera_update_script/camera_update_script.yy",},},

@@ -36,4 +36,13 @@ if (lighting_triggered) {
         lerp_time = 0;
         sound_played = false;
     }
+	
+	
+	// Send weather effects to all clients
+    var buffer = buffer_create(256, buffer_grow, 1);
+    buffer_write(buffer, buffer_u8, 2); // Event type: Lighting update
+    buffer_write(buffer, buffer_u32, shadow_color);
+    buffer_write(buffer, buffer_f32, shadow_alpha);
+    network_send_all(buffer, buffer_tell(buffer));
+    buffer_delete(buffer);
 }
