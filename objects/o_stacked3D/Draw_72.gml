@@ -25,12 +25,12 @@ for (var i = 0; i < array_length(global.lights); i++) {
 }
 
 // Get the shadow color and adjust by shadow_alpha
-var _r = color_get_red(master.shadow_color);
-var _g = color_get_green(master.shadow_color);
-var _b = color_get_blue(master.shadow_color);
+var _r = color_get_red(global.shadow_color);
+var _g = color_get_green(global.shadow_color);
+var _b = color_get_blue(global.shadow_color);
 
 // Adjust shadow color based on shadow_alpha (simulating lightning effect)
-var alpha = lerp(1, master.shadow_alpha, master.shadow_alpha / 0.8);  // Normalize shadow_alpha to [0, 1]
+var alpha = lerp(1, global.shadow_alpha, global.shadow_alpha / 0.8);  // Normalize shadow_alpha to [0, 1]
 var shadow_r = _r * alpha;
 var shadow_g = _g * alpha;
 var shadow_b = _b * alpha;
@@ -41,9 +41,9 @@ var dimmed_green_intensity = total_green_intensity * alpha;
 var dimmed_blue_intensity = total_blue_intensity * alpha;
 
 // Combine the shadow color with the dimmed light intensity for final object color
-var final_red = lerp(shadow_r, dimmed_red_intensity, master.shadow_alpha / 0.8);
-var final_green = lerp(shadow_g, dimmed_green_intensity, master.shadow_alpha / 0.8);
-var final_blue = lerp(shadow_b, dimmed_blue_intensity, master.shadow_alpha / 0.8);
+var final_red = lerp(shadow_r, dimmed_red_intensity, global.shadow_alpha / 0.8);
+var final_green = lerp(shadow_g, dimmed_green_intensity, global.shadow_alpha / 0.8);
+var final_blue = lerp(shadow_b, dimmed_blue_intensity, global.shadow_alpha / 0.8);
 
 // Set the final object color based on the shadow color and light intensity
-obj_color = [final_red, final_green, final_blue, master.shadow_alpha]
+obj_color = [final_red, final_green, final_blue, global.shadow_alpha]

@@ -63,6 +63,7 @@
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"camera_update_script","path":"scripts/camera_update_script/camera_update_script.yy",},},
     {"id":{"name":"get_partial_light_intensity","path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},},
+    {"id":{"name":"network_broadcast_all","path":"scripts/network_broadcast_all/network_broadcast_all.yy",},},
     {"id":{"name":"smoothstep","path":"scripts/smoothstep/smoothstep.yy",},},
     {"id":{"name":"test_move_collide_script","path":"scripts/test_move_collide_script/test_move_collide_script.yy",},},
     {"id":{"name":"snd_ambience","path":"sounds/snd_ambience/snd_ambience.yy",},},

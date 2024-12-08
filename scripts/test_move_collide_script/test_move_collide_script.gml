@@ -24,6 +24,19 @@ function is_facing_direction(target_angle) {
 
 //GOOD
 function test_move_collide_script(_x, _y, move_x, move_y) {
+	
+	// Ensure the current room is defined and has the correct structure
+    if (!variable_global_exists("current_room") || !is_struct(global.current_room)) {
+        show_debug_message("Error: Current room is not set or has incorrect type.");
+        return;
+    }
+
+    // Ensure connected room IDs exist and are valid
+    if (!is_array(global.current_room.connected_room_ids)) {
+        show_debug_message("Error: Connected room IDs are not set.");
+        return;
+    }
+	
     // Calculate the new potential position based on movement
     var new_x = _x + move_x;
     var new_y = _y + move_y;

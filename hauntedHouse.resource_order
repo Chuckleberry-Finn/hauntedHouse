@@ -27,6 +27,7 @@
     {"name":"weather_handler","order":4,"path":"objects/weather_handler/weather_handler.yy",},
     {"name":"camera_update_script","order":1,"path":"scripts/camera_update_script/camera_update_script.yy",},
     {"name":"get_partial_light_intensity","order":4,"path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},
+    {"name":"network_broadcast_all","order":5,"path":"scripts/network_broadcast_all/network_broadcast_all.yy",},
     {"name":"smoothstep","order":3,"path":"scripts/smoothstep/smoothstep.yy",},
     {"name":"test_move_collide_script","order":2,"path":"scripts/test_move_collide_script/test_move_collide_script.yy",},
     {"name":"snd_creak2","order":1,"path":"sounds/snd_creak2/snd_creak2.yy",},

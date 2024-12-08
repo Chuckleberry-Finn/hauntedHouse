@@ -5,7 +5,7 @@ var _z = -r_h*y_scale;
 var _rotX = -90;
 var _rotY = 0;
 var _rotZ = 0;
-p_color = master.shadow_color
+p_color = global.shadow_color
 
 if (draw == "east") {
     _x = room_width;

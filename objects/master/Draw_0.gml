@@ -2,7 +2,7 @@ if !surface_exists(global.darkness_surface) { global.darkness_surface = surface_
 
 surface_set_target(global.darkness_surface);
 
-draw_clear_alpha(shadow_color, shadow_alpha);
+draw_clear_alpha(global.shadow_color, global.shadow_alpha);
 gpu_set_depth(-5.2);
 
 for (var i = 0; i < global.num_lights; i++) {
@@ -24,7 +24,7 @@ for (var i = 0; i < global.num_lights; i++) {
     var light_intensity = light.intensity;
     var light_color = light.light_color;
 
-    var light_alpha = lerp(0, light_intensity, shadow_alpha/0.8);
+    var light_alpha = lerp(0, light_intensity, global.shadow_alpha/0.8);
 
 	gpu_set_blendmode(bm_add);
 	draw_set_alpha(light_alpha / 255);
