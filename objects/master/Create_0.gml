@@ -61,6 +61,9 @@ var socket = network_create_socket(network_socket_tcp);
 // Try to connect to the server
 global.server_socket = network_connect_raw(socket, server_ip, server_port);
 
+global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
+global.house_map = []
+
 // Determine if this instance should be the server
 if (global.server_socket < 0) {
     global.is_server = true; // No server found; become the server

@@ -28,16 +28,17 @@ if (async_load[? "type"] == network_type_data) {
 
         // 2: House Map Data
 		case 2:  // Event type 2: House map data
-            var house_map_json = buffer_read(buffer, buffer_string); 
-            global.house_map = json_parse(house_map_json); 
+		    var house_map_json = buffer_read(buffer, buffer_string); 
+		    global.house_map = json_parse(house_map_json); 
 
-            if (array_length(global.house_map) > 0) {
-                global.current_room = global.house_map[0];  // Assign first room
-                show_debug_message("Client: Received and loaded house map.");
-            } else {
-                show_debug_message("Error: Received an empty house map.");
-            }
-            break;
+		    if (array_length(global.house_map) > 0 && array_length(global.house_map[0]) > 0) {
+		        global.current_room = global.house_map[0][0];  // Correctly assign first room
+		        show_debug_message("Client: Received and loaded house map.");
+		    } else {
+		        show_debug_message("Error: Received an empty or invalid house map.");
+		    }
+		    break;
+
 
         // 3: Lighting Update
         case 3:  // Lightning Trigger Event

@@ -3,7 +3,6 @@
 global.players = [];  // Track all connected players
 
 // Generate the house map (array)
-global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
 global.house_map = global.houseHandler.generate_house_map(global.max_rooms, global.num_floors); 
 
 
