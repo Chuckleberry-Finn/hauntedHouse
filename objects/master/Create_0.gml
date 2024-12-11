@@ -8,7 +8,6 @@ sound_current = noone;
 
 global.shadow_color = make_color_rgb(10, 5, 15);
 global.shadow_alpha = 0.8;
-global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
 global.view_xy = 45;
 
@@ -80,6 +79,8 @@ if (global.is_server) {
 } else {
     global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
 }
+
+global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
 global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
 global.houseHandler.enter_room(0, 0)
