@@ -69,15 +69,11 @@ if (global.server_socket < 0) {
     network_destroy(socket); // Destroy the client socket
     network_create_server(network_socket_tcp, server_port, 32); // Start a server
     show_debug_message("This instance is the server.");
+	global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
 } else {
     global.is_server = false; // Server found; become the client
-    show_debug_message("This instance is a client connected to the server.");
-}
-
-if (global.is_server) {
-    global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
-} else {
-    global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
+    show_debug_message("This instance is a client and will attempt to connected to the server.");
+	global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
 }
 
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);

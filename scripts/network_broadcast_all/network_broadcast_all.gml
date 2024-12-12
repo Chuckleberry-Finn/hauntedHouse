@@ -16,6 +16,8 @@ function network_broadcast_all(buffer) {
             // Log failed sends
             if (result < 0) {
                 show_debug_message("Error: Failed to send data to client " + string(client.socket));
+			} else {
+				show_debug_message("broadcasting: sending data to client " + string(client.socket));
             }
         }
     }
