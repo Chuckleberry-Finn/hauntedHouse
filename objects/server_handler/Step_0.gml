@@ -1,3 +1,4 @@
+/*
 // Process player inputs
 for (var i = 0; i < array_length(global.players); i++) {
     var player = global.players[i];
@@ -35,3 +36,4 @@ for (var i = 0; i < array_length(global.players); i++) {
 
     buffer_delete(buffer);
 }
+*/

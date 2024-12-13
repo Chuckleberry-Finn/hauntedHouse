@@ -58,10 +58,12 @@ var server_port = 12345;
 var socket = network_create_socket(network_socket_tcp);
 
 // Try to connect to the server
-global.server_socket = network_connect_raw(socket, server_ip, server_port);
+global.server_socket = network_connect(socket, server_ip, server_port);
 
 global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
 global.house_map = []
+
+global.player = undefined
 
 // Determine if this instance should be the server
 if (global.server_socket < 0) {
@@ -70,6 +72,10 @@ if (global.server_socket < 0) {
     network_create_server(network_socket_tcp, server_port, 32); // Start a server
     show_debug_message("This instance is the server.");
 	global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
+	
+	global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+	global.houseHandler.enter_room(0, 0)
+
 } else {
     global.is_server = false; // Server found; become the client
     show_debug_message("This instance is a client and will attempt to connected to the server.");
@@ -78,8 +84,7 @@ if (global.server_socket < 0) {
 
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
-global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
-global.houseHandler.enter_room(0, 0)
+
 
 
 // Add a new light source to the global lights array

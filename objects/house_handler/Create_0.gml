@@ -299,15 +299,30 @@ function enter_room(door, room_id) {
     // Update the current room in global state
     global.current_room = found_room;
 
-	global.current_room_objs = []
-    for (var i = 0; i < array_length(_room.objects); i++) {
-        var obj_data = _room.objects[i];
-        var obj_type = asset_get_index(obj_data[? "type"]);
-        if (obj_type != -1) {
-            var o = instance_create_layer(obj_data[? "x"], obj_data[? "y"], "Instances", obj_type);
-			array_push(global.current_room_objs, o);
-		}
-    }
+	// Reset the current room objects array
+	global.current_room_objs = [];
+
+	// Ensure the room has a valid objects array
+	if (is_array(found_room.objects)) {
+	    for (var i = 0; i < array_length(found_room.objects); i++) {
+	        var obj_data = found_room.objects[i];
+
+	        // Check for valid struct fields in obj_data
+	        if (is_struct(obj_data) && obj_data.type != undefined) {
+	            var obj_type = asset_get_index(obj_data.type);
+
+	            // Only create the object if the asset exists
+	            if (obj_type != -1) {
+	                var o = instance_create_layer(obj_data.x, obj_data.y, "Instances", obj_type);
+	                array_push(global.current_room_objs, o);
+	            }
+	        } else {
+	            show_debug_message("Error: Invalid object data at index " + string(i));
+	        }
+	    }
+	} else {
+	    show_debug_message("Error: Room objects are not an array.");
+	}
 
 	player.room_id = room_id;
 
@@ -331,15 +346,6 @@ function enter_room(door, room_id) {
             break;
     }
 
-    var buffer = buffer_create(256, buffer_grow, 1);
-    buffer_write(buffer, buffer_u8, 4); // Event type: Player room transition
-    buffer_write(buffer, buffer_u32, player.id);
-    buffer_write(buffer, buffer_u32, player.room_id);
-    buffer_write(buffer, buffer_f32, player.x);
-    buffer_write(buffer, buffer_f32, player.y);
-    network_broadcast_all(buffer);
-    buffer_delete(buffer);
-
     // If the player has entered a room on a new floor, ensure the transition is handled
     if (global.current_room.floor_id != floor_id) {
         show_debug_message("Floor transition: " + string(floor_id) + " to " + string(global.current_room.floor_id));
@@ -347,16 +353,26 @@ function enter_room(door, room_id) {
 }
 
 
+// Replaces ds_map_create() with a struct-based format
+function create_object(type, x, y) {
+    return {
+        type: type,  // Object type
+        x: x,        // X Position
+        y: y         // Y Position
+    };
+}
 
-// Fills room with random objects
+// Fills a room with objects
 function fill_room(_room) {
     show_debug_message("Filling room " + string(_room.room_id));
+    
     var object_list = [
-		"o_plant", "o_stool", "o_rug1", "o_shelf",
-		"o_plant", "o_stool", "o_rug1", "o_shelf", 
-		"o_mouse"
-		];
+        "o_plant", "o_stool", "o_rug1", "o_shelf", "o_mouse"
+    ];
+
     var num_objects = irandom_range(2, 5);
+
+    _room.objects = [];  // Reset the objects array
 
     for (var i = 0; i < num_objects; i++) {
         var random_x = irandom_range(room_width * 0.1, room_width * 0.9);
@@ -365,21 +381,27 @@ function fill_room(_room) {
         var random_index = irandom(array_length(object_list) - 1);
         var selected_object = object_list[random_index];
 
-        var sprite_name = string_delete(selected_object, 1, 2);
-
-        var obj_width = sprite_get_width(asset_get_index(sprite_name));
-        var obj_height = sprite_get_height(asset_get_index(sprite_name));
-
-        var adjusted_x = clamp(random_x, obj_width, room_width - obj_width);
-        var adjusted_y = clamp(random_y, obj_height, room_height - obj_height);
-
-        var obj_data = ds_map_create();
-        ds_map_add(obj_data, "type", selected_object);
-        ds_map_add(obj_data, "x", adjusted_x);
-        ds_map_add(obj_data, "y", adjusted_y);
-
-        array_push(_room.objects, obj_data);
+        // Create the object as a struct
+        var obj_data = create_object(selected_object, random_x, random_y);
+        array_push(_room.objects, obj_data);  // Push struct to room's objects array
     }
 
     _room.generated = true;
+	
+	// Send only the room's objects, floor_id, and room_id
+    var room_update = {
+        floor_id: _room.floor_id,
+        room_id: _room.room_id,
+        objects: _room.objects
+    };
+    
+    var obj_json = json_stringify(room_update);
+
+    var buffer = buffer_create(256, buffer_grow, 1);
+    buffer_write(buffer, buffer_u8, 7);  // Event Type: Room Objects Update
+    buffer_write(buffer, buffer_string, obj_json);
+    network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+    buffer_delete(buffer);
+
+    show_debug_message("Client: " + global.server_socket + " Sent room object update.");
 }

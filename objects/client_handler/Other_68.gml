@@ -18,6 +18,12 @@ if (async_load[? "type"] == network_type_data) {
             var house_map_json = buffer_read(buffer, buffer_string); 
             global.house_map = json_parse(house_map_json); 
             show_debug_message("Client: Received house map.");
+			
+			if !global.player {
+				global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+				global.houseHandler.enter_room(0, 0)
+			}
+			
             break;
 
         case 3:  // Lightning Update
@@ -27,7 +33,24 @@ if (async_load[? "type"] == network_type_data) {
                 show_debug_message("Client: Lightning triggered.");
             }
             break;
+			
+		case 7:  // Room Objects Update from Server
+            var obj_json = buffer_read(buffer, buffer_string);
+            var room_update = json_parse(obj_json);
 
+            // Direct Room Update Using floor_id
+            var floor_id = room_update.floor_id;
+            var room_id = room_update.room_id;
+            var _room = global.house_map[floor_id][room_id];
+
+            if (_room.room_id == room_id) {
+                _room.objects = room_update.objects;
+                _room.generated = true;  // Mark room as generated
+            }
+     
+            show_debug_message("Client: Room " + string(floor_id) + "," + string(room_id) + " objects recieved.");
+            break;
+    
         default:
             show_debug_message("Unknown event type: " + string(e_type));
             break;

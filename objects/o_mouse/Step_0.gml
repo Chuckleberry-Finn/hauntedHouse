@@ -117,7 +117,7 @@ if (_target_corner != noone) {
 		
 		for (var i = 0; i < array_length(global.current_room.objects); i++) {
 		    var obj_data = global.current_room.objects[i];
-		    var obj_type = asset_get_index(obj_data[? "type"]);
+		    var obj_type = asset_get_index(obj_data.type);
 		    if (obj_type == object_index) {
 				array_delete(global.current_room.objects, i, 1);
 			}

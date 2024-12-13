@@ -14,7 +14,7 @@ if (array_length(global.house_map) > 0) {
     show_debug_message("Error: House map generation failed!");
 }
 
-
+/*
 // Serialize the house map array using json_stringify
 var house_map_json = json_stringify(global.house_map);
 // Broadcast house map to all clients on server start
@@ -25,3 +25,4 @@ buffer_write(buffer, buffer_string, house_map_json);
 network_broadcast_all(buffer);
 buffer_delete(buffer); // Clean up the buffer
 show_debug_message("Server: House map generated and broadcast.");
+*/

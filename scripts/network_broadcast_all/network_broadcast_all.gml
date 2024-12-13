@@ -11,7 +11,7 @@ function network_broadcast_all(buffer) {
 
         // Ensure the client has a valid socket
         if (client != undefined && client.socket != undefined && client.socket != -1) {
-            var result = network_send_raw(client.socket, buffer, buffer_tell(buffer));
+            var result = network_send_packet(client.socket, buffer, buffer_tell(buffer));
 
             // Log failed sends
             if (result < 0) {
