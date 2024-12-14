@@ -45,7 +45,7 @@ if (async_load[? "type"] == network_type_data) {
 			}
 
 		    if (found_data) {
-			    if (p_socket == global.server_socket) {
+			    if (p_socket == global.client_socket_id) {
 			        show_debug_message("Received own socket ID. Ignoring player creation.");
 			    } else if (global.current_room == false || room_id != global.current_room.room_id) {
 			        show_debug_message("Room mismatch or current room undefined.");
@@ -60,51 +60,34 @@ if (async_load[? "type"] == network_type_data) {
 		            }
 					
 			    } else {
-					var player_found = false;
-					
-					for (var i = 0; i < array_length(global.other_players); i++) {
-		                if (global.other_players[i].inst_socket == p_socket) {
-		                    player_found = global.other_players[i];
-		                    break;
-		                }
-		            }
-					
-					if (!player_found) {
-						var new_player = instance_create_layer(p_x, p_y, "Instances", o_person ); 
-						new_player.inst_room_id = room_id;
-						new_player.inst_socket = p_socket;
-						new_player.image_angle = facing ;
-							
-						player_found = new_player
-						array_push(global.other_players, player_found);
-						show_debug_message("Client: Created new player instance for socket " + string(p_socket) + " X:" + string(p_x) + " Y:" + string(p_y));
-
-					} else {
-						
-						player_found.x = p_x
-						player_found.y = p_y
-						player_found.image_angle = facing
-						
-						show_debug_message("Client: Updated player instance for socket " + string(p_socket) + " X:" + string(p_x) + " Y:" + string(p_y));
-					}
-					
+					 update_player_instance(p_socket, p_x, p_y, room_id, facing)
 				}
 			}
 		    break;
        
 
-        case 2:  // House Map Data
+        case 2: //connection - send housemap, players, and socket number
             var house_map_json = buffer_read(buffer, buffer_string); 
 			var client_socket = buffer_read(buffer, buffer_s32);
+			
+			var players_json = buffer_read(buffer, buffer_string); 
 			
             global.house_map = json_parse(house_map_json); 
             show_debug_message("Client: Received house map.");
 			
+			global.players = json_parse(players_json);
+			
 			if !global.player {
-				global.server_socket = client_socket
+				global.client_socket_id = client_socket
 				global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
 				global.houseHandler.enter_room(0, 0)
 			}
+			
+			// Update Existing Players
+		    for (var i = 0; i < array_length(global.players); i++) {
+				var i_data = global.players[i]
+				update_player_instance(i_data._socket, i_data._x, i_data._y, i_data._room_id, i_data._facing);
+		    }
 			
             break;
 
@@ -119,15 +102,13 @@ if (async_load[? "type"] == network_type_data) {
 		case 7:  // Room Objects Update from Server
             var obj_json = buffer_read(buffer, buffer_string);
             var room_update = json_parse(obj_json);
-
-            // Direct Room Update Using floor_id
             var floor_id = room_update.floor_id;
             var room_id = room_update.room_id;
             var _room = global.house_map[floor_id][room_id];
 
             if (_room.room_id == room_id) {
                 _room.objects = room_update.objects;
-                _room.generated = true;  // Mark room as generated
+                _room.generated = true;
             }
      
             show_debug_message("Client: Room " + string(floor_id) + "," + string(room_id) + " objects recieved.");

@@ -66,6 +66,7 @@
     {"id":{"name":"network_broadcast_all","path":"scripts/network_broadcast_all/network_broadcast_all.yy",},},
     {"id":{"name":"smoothstep","path":"scripts/smoothstep/smoothstep.yy",},},
     {"id":{"name":"test_move_collide_script","path":"scripts/test_move_collide_script/test_move_collide_script.yy",},},
+    {"id":{"name":"update_player_instance","path":"scripts/update_player_instance/update_player_instance.yy",},},
     {"id":{"name":"snd_ambience","path":"sounds/snd_ambience/snd_ambience.yy",},},
     {"id":{"name":"snd_creak1","path":"sounds/snd_creak1/snd_creak1.yy",},},
     {"id":{"name":"snd_creak2","path":"sounds/snd_creak2/snd_creak2.yy",},},

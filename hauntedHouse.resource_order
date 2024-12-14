@@ -30,6 +30,7 @@
     {"name":"network_broadcast_all","order":5,"path":"scripts/network_broadcast_all/network_broadcast_all.yy",},
     {"name":"smoothstep","order":3,"path":"scripts/smoothstep/smoothstep.yy",},
     {"name":"test_move_collide_script","order":2,"path":"scripts/test_move_collide_script/test_move_collide_script.yy",},
+    {"name":"update_player_instance","order":6,"path":"scripts/update_player_instance/update_player_instance.yy",},
     {"name":"snd_creak2","order":1,"path":"sounds/snd_creak2/snd_creak2.yy",},
     {"name":"snd_creak3","order":2,"path":"sounds/snd_creak3/snd_creak3.yy",},
     {"name":"snd_creak4","order":3,"path":"sounds/snd_creak4/snd_creak4.yy",},

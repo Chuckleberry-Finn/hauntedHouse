@@ -10,7 +10,7 @@ if (array_length(global.house_map) > 0) {
 	global.houseHandler.enter_room(0, 0)
 	
 	var new_player = {
-            _socket: global.server_socket,
+            _socket: global.client_socket_id,
             _x: global.player.x,
             _y: global.player.y,
             _room_id: global.current_room.room_id,

@@ -59,6 +59,7 @@ var socket = network_create_socket(network_socket_tcp);
 
 // Try to connect to the server
 global.server_socket = network_connect(socket, server_ip, server_port);
+global.client_socket_id = -1
 global.players = [];
 global.other_players = [];
 
@@ -76,8 +77,8 @@ if (global.server_socket < 0) {
 	global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
 } else {
     global.is_server = false; // Server found; become the client
-    show_debug_message("This instance is a client. (server socket " + string(global.server_socket) + ")");
 	global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
+	show_debug_message("This instance is a client. (server socket " + string(global.client_socket_id) + ")");
 }
 
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
