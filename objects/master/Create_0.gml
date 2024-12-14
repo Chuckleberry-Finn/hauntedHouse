@@ -72,15 +72,11 @@ if (global.server_socket < 0) {
     global.is_server = true; // No server found; become the server
     network_destroy(socket); // Destroy the client socket
     network_create_server(network_socket_tcp, server_port, 32); // Start a server
-    show_debug_message("This instance is the server.");
+    show_debug_message("This instance is the server. (server socket " + string(global.server_socket) + ")");
 	global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
-	
-	global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
-	global.houseHandler.enter_room(0, 0)
-
 } else {
     global.is_server = false; // Server found; become the client
-    show_debug_message("This instance is a client and will attempt to connected to the server.");
+    show_debug_message("This instance is a client. (server socket " + string(global.server_socket) + ")");
 	global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
 }
 

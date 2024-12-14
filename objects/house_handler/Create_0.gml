@@ -324,7 +324,7 @@ function enter_room(door, room_id) {
 	    show_debug_message("Error: Room objects are not an array.");
 	}
 
-	player.room_id = room_id;
+	//player.room_id = room_id;
 
     // Handle player positioning based on the door they entered through
     switch (door) {

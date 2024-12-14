@@ -95,16 +95,19 @@ if (is_moving) {
 	// Create and send a movement update buffer
     var buffer = buffer_create(256, buffer_grow, 1);
     buffer_write(buffer, buffer_u8, 1);  // Event Type: Player Position Update
-    buffer_write(buffer, buffer_u32, global.server_socket);  // Use socket as ID
-    buffer_write(buffer, buffer_f32, x);  // Player x position
-    buffer_write(buffer, buffer_f32, y);  // Player y position
+    buffer_write(buffer, buffer_s32, global.server_socket);  // Use socket as ID
+    buffer_write(buffer, buffer_f32, global.player.x);  // Player x position
+    buffer_write(buffer, buffer_f32, global.player.y);  // Player y position
     buffer_write(buffer, buffer_u32, global.current_room.room_id);
-    buffer_write(buffer, buffer_f32, image_angle);  // Facing direction
+    buffer_write(buffer, buffer_f32, global.player.image_angle);  // Facing direction
 
-    network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+	if (global.is_server) {
+		network_broadcast_all(buffer, global.server_socket);
+		show_debug_message("Server: Sent player update for socket: " +  string(global.server_socket));
+    } else {
+		show_debug_message("ping server: player update for socket: " +  string(global.server_socket));
+		network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+	}
+	
     buffer_delete(buffer);
-
-    show_debug_message("Sent player movement update.");
-	
-	
 }
