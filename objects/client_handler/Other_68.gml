@@ -5,14 +5,55 @@ if (async_load[? "type"] == network_type_data) {
     var e_type = buffer_read(buffer, buffer_u8);  // First byte is the event type
 
     switch (e_type) {
-        case 1:  // Player Position Update
-            var p_id = buffer_read(buffer, buffer_u32);
+		
+		case 8:  // Player Disconnect
+            var client_socket = buffer_read(buffer, buffer_u32);
+
+            // Find and remove the player instance
+            for (var i = array_length(global.other_players) - 1; i >= 0; i--) {
+                if (global.other_players[i].socket == client_socket) {
+                    instance_destroy(global.other_players[i]);
+                    array_delete(global.other_players, i, 1);
+
+                    show_debug_message("Client: Removed player with socket " + string(client_socket));
+                    break;
+                }
+            }
+            break;
+		
+        case 1:
+            var p_socket = buffer_read(buffer, buffer_u32);
             var p_x = buffer_read(buffer, buffer_f32);
             var p_y = buffer_read(buffer, buffer_f32);
             var room_id = buffer_read(buffer, buffer_u32);
             var facing = buffer_read(buffer, buffer_f32);
-            show_debug_message("Received Position Update: Player " + string(p_id));
+
+            var found = false;
+
+            // Update existing players' positions
+            for (var i = 0; i < array_length(global.other_players); i++) {
+                if (global.other_players[i].socket == p_socket) {
+                    global.other_players[i].x = p_x;
+                    global.other_players[i].y = p_y;
+                    global.other_players[i].room_id = room_id;
+                    global.other_players[i].facing = facing;
+                    found = true;
+                    break;
+                }
+            }
+
+            // Create new player instance if not found
+            if (!found && p_socket != global.server_socket) {
+                var new_player = instance_create_layer(p_x, p_y, "Instances", o_person);
+                new_player.socket = p_socket;
+                new_player.room_id = room_id;
+                new_player.facing = facing;
+                array_push(global.other_players, new_player);
+
+                show_debug_message("Client: Created new player instance for socket " + string(p_socket));
+            }
             break;
+       
 
         case 2:  // House Map Data
             var house_map_json = buffer_read(buffer, buffer_string); 

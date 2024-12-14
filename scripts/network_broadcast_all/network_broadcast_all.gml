@@ -1,24 +1,13 @@
-/// @desc Sends a buffer to all connected clients
+/// Broadcasts a message to all clients, optionally excluding a specific socket.
 /// @param buffer The buffer to send
-function network_broadcast_all(buffer) {
-    if (!is_array(global.players)) {
-        show_debug_message("Error: No players to broadcast to.");
-        return;
-    }
-
+/// @param exclude_socket [Optional] The socket to exclude from the broadcast (defaults to no exclusion)
+function network_broadcast_all(buffer, exclude_socket = -1) {
     for (var i = 0; i < array_length(global.players); i++) {
         var client = global.players[i];
 
-        // Ensure the client has a valid socket
-        if (client != undefined && client.socket != undefined && client.socket != -1) {
-            var result = network_send_packet(client.socket, buffer, buffer_tell(buffer));
-
-            // Log failed sends
-            if (result < 0) {
-                show_debug_message("Error: Failed to send data to client " + string(client.socket));
-			} else {
-				show_debug_message("broadcasting: sending data to client " + string(client.socket));
-            }
+        // Skip the excluded socket and the server itself
+        if (client.socket != exclude_socket && client.socket != global.server_socket) {
+            network_send_packet(client.socket, buffer, buffer_tell(buffer));
         }
     }
 }

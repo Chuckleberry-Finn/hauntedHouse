@@ -59,6 +59,8 @@ var socket = network_create_socket(network_socket_tcp);
 
 // Try to connect to the server
 global.server_socket = network_connect(socket, server_ip, server_port);
+global.players = [];
+global.other_players = [];
 
 global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
 global.house_map = []

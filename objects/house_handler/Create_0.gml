@@ -400,8 +400,16 @@ function fill_room(_room) {
     var buffer = buffer_create(256, buffer_grow, 1);
     buffer_write(buffer, buffer_u8, 7);  // Event Type: Room Objects Update
     buffer_write(buffer, buffer_string, obj_json);
-    network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+	
+	if (global.is_server) {
+		network_broadcast_all(buffer);
+		//show_debug_message("Server: Sent room object update.");
+    } else {
+		network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+		//show_debug_message("Client " + string(global.server_socket) + ": Sent room object update.");
+	}
+	
     buffer_delete(buffer);
 
-    show_debug_message("Client: " + global.server_socket + " Sent room object update.");
+    
 }

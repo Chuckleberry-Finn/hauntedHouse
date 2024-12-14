@@ -1,5 +1,7 @@
+global.other_players = [];
+global.local_player_id = -1;
 global.is_connected = false;
-// Create a socket
+
 
 var server_ip = "127.0.0.1";  // Change this for LAN/online testing
 var port = 12345;

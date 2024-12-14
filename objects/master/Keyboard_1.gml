@@ -90,4 +90,21 @@ if (is_moving) {
 	        sound_current = random_sound;
 	    }
 	}
+	
+
+	// Create and send a movement update buffer
+    var buffer = buffer_create(256, buffer_grow, 1);
+    buffer_write(buffer, buffer_u8, 1);  // Event Type: Player Position Update
+    buffer_write(buffer, buffer_u32, global.server_socket);  // Use socket as ID
+    buffer_write(buffer, buffer_f32, x);  // Player x position
+    buffer_write(buffer, buffer_f32, y);  // Player y position
+    buffer_write(buffer, buffer_u32, global.current_room.room_id);
+    buffer_write(buffer, buffer_f32, image_angle);  // Facing direction
+
+    network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
+    buffer_delete(buffer);
+
+    show_debug_message("Sent player movement update.");
+	
+	
 }
