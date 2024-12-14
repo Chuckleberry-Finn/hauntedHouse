@@ -91,17 +91,34 @@ if (is_moving) {
 	    }
 	}
 	
-
+	var socket = global.client_socket_id
+	var p_x = global.player.x
+	var p_y = global.player.y
+	var room_id = global.current_room.room_id
+	var facing = global.player.image_angle
+	
 	// Create and send a movement update buffer
     var buffer = buffer_create(256, buffer_grow, 1);
     buffer_write(buffer, buffer_u8, 1);  // Event Type: Player Position Update
-    buffer_write(buffer, buffer_s32, global.client_socket_id);  // Use socket as ID
-    buffer_write(buffer, buffer_f32, global.player.x);  // Player x position
-    buffer_write(buffer, buffer_f32, global.player.y);  // Player y position
-    buffer_write(buffer, buffer_u32, global.current_room.room_id);
-    buffer_write(buffer, buffer_f32, global.player.image_angle);  // Facing direction
+    buffer_write(buffer, buffer_s32, socket);  // Use socket as ID
+    buffer_write(buffer, buffer_f32, p_x);  // Player x position
+    buffer_write(buffer, buffer_f32, p_y);  // Player y position
+    buffer_write(buffer, buffer_u32, room_id);
+    buffer_write(buffer, buffer_f32, facing);  // Facing direction
 
 	if (global.is_server) {
+		
+		for (var i = 0; i < array_length(global.players); i++) {
+		    var player = global.players[i];
+		    if (player._socket == socket) {
+		        player._x = p_x;
+		        player._y = p_y;
+		        player._room_id = room_id;
+		        player._facing = facing;
+		        break;
+		    }
+		}
+		
 		network_broadcast_all(buffer, global.client_socket_id);
 		show_debug_message("Server: Sent player update for socket: " +  string(global.client_socket_id));
     } else {

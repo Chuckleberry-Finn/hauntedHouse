@@ -47,18 +47,7 @@ if (async_load[? "type"] == network_type_data) {
 		    if (found_data) {
 			    if (p_socket == global.client_socket_id) {
 			        show_debug_message("Received own socket ID. Ignoring player creation.");
-			    } else if (global.current_room == false || room_id != global.current_room.room_id) {
-			        show_debug_message("Room mismatch or current room undefined.");
-					
-					// Find and remove the player instance
-		            for (var i = array_length(global.other_players) - 1; i >= 0; i--) {
-		                if (global.other_players[i].inst_socket == p_socket) {
-		                    instance_destroy(global.other_players[i]);
-		                    array_delete(global.other_players, i, 1);
-		                    break;
-		                }
-		            }
-					
+
 			    } else {
 					 update_player_instance(p_socket, p_x, p_y, room_id, facing)
 				}

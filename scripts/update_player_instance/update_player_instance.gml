@@ -4,23 +4,28 @@ function update_player_instance(p_socket, p_x, p_y, room_id, facing){
 	show_debug_message("global.client_socket_id: " + string(global.client_socket_id));
 	show_debug_message("Updating player instance " + string(p_socket));
 	
-	if (p_socket == global.client_socket_id) {
-		show_debug_message(" --ignore self");
-		return
-	};
-	
+	if (p_socket == global.client_socket_id) { return };
+
 	for (var i = array_length(global.other_players) - 1; i >= 0; i--) {
 
 	    if (instance_exists(global.other_players[i])) {
-	        if (global.other_players[i].inst_socket == p_socket) {
-	            player_found = global.other_players[i];
-	            break;
-	        }
+	        
+			if (room_id == global.current_room.room_id) {
+				if (global.other_players[i].inst_socket == p_socket) {
+		            player_found = global.other_players[i];
+		            break;
+				}
+			} else {
+				instance_destroy(global.other_players[i]);
+				array_delete(global.other_players, i, 1);
+			}
+		
 	    } else {
 	        array_delete(global.other_players, i, 1);
-	        show_debug_message("Removed invalid player instance at index " + string(i));
 	    }
 	}
+		
+	if (room_id != global.current_room.room_id) { return }
 		
 	if (!player_found) {
 		var new_player = instance_create_layer(p_x, p_y, "Instances", o_person ); 
