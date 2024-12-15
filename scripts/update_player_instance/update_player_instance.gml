@@ -1,4 +1,11 @@
-function update_player_instance(p_socket, p_x, p_y, room_id, facing){
+function update_player_instance(data){
+	
+	var p_socket = data._socket
+	var p_x = data._x
+	var p_y = data._y
+	var room_id = data._room_id
+	var facing = data._facing
+	
 	var player_found = false;
 	
 	show_debug_message("global.client_socket_id: " + string(global.client_socket_id));
@@ -9,19 +16,19 @@ function update_player_instance(p_socket, p_x, p_y, room_id, facing){
 	for (var i = array_length(global.other_players) - 1; i >= 0; i--) {
 
 	    if (instance_exists(global.other_players[i])) {
-	        
-			if (room_id == global.current_room.room_id) {
-				if (global.other_players[i].inst_socket == p_socket) {
-		            player_found = global.other_players[i];
-		            break;
+			if (global.other_players[i].inst_socket == p_socket) {
+				if (room_id == global.current_room.room_id) {
+					player_found = global.other_players[i];
+				} else {
+					instance_destroy(global.other_players[i]);
+					array_delete(global.other_players, i, 1);
 				}
-			} else {
-				instance_destroy(global.other_players[i]);
-				array_delete(global.other_players, i, 1);
+				break;
 			}
 		
 	    } else {
 	        array_delete(global.other_players, i, 1);
+			break;
 	    }
 	}
 		

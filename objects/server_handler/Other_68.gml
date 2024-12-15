@@ -56,7 +56,7 @@ if (async_load[? "type"] == network_type_data) {
 		            player._y = p_y;
 		            player._room_id = room_id;
 		            player._facing = facing;
-		            player_found = true;
+		            player_found = player;
 		            break;
 		        }
 		    }
@@ -71,7 +71,7 @@ if (async_load[? "type"] == network_type_data) {
 		        buffer_write(broadcast_buffer, buffer_u32, room_id);
 		        buffer_write(broadcast_buffer, buffer_f32, facing);
 				
-				update_player_instance(p_socket, p_x, p_y, room_id, facing)
+				update_player_instance(player_found)
 				
 		        network_broadcast_all(broadcast_buffer); 
 		        buffer_delete(broadcast_buffer);

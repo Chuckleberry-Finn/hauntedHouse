@@ -49,7 +49,13 @@ if (async_load[? "type"] == network_type_data) {
 			        show_debug_message("Received own socket ID. Ignoring player creation.");
 
 			    } else {
-					 update_player_instance(p_socket, p_x, p_y, room_id, facing)
+					
+					found_data._x = p_x;
+		            found_data._y = p_y;
+		            found_data._room_id = room_id;
+		            found_data._facing = facing;
+					
+					update_player_instance(found_data)
 				}
 			}
 		    break;
@@ -71,13 +77,6 @@ if (async_load[? "type"] == network_type_data) {
 				global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
 				global.houseHandler.enter_room(0, 0)
 			}
-			
-			// Update Existing Players
-		    for (var i = 0; i < array_length(global.players); i++) {
-				var i_data = global.players[i]
-				update_player_instance(i_data._socket, i_data._x, i_data._y, i_data._room_id, i_data._facing);
-		    }
-			
             break;
 
         case 3:  // Lightning Update

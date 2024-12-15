@@ -346,6 +346,11 @@ function enter_room(door, room_id) {
             break;
     }
 
+	for (var i = 0; i < array_length(global.players); i++) {
+		var i_data = global.players[i]
+		update_player_instance(i_data);
+	}
+
     // If the player has entered a room on a new floor, ensure the transition is handled
     if (global.current_room.floor_id != floor_id) {
         show_debug_message("Floor transition: " + string(floor_id) + " to " + string(global.current_room.floor_id));
