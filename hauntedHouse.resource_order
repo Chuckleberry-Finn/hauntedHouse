@@ -45,6 +45,7 @@
     {"name":"ghost","order":4,"path":"sprites/ghost/ghost.yy",},
     {"name":"gui","order":5,"path":"sprites/gui/gui.yy",},
     {"name":"mouse","order":16,"path":"sprites/mouse/mouse.yy",},
+    {"name":"person_lady","order":17,"path":"sprites/person_lady/person_lady.yy",},
     {"name":"person","order":8,"path":"sprites/person/person.yy",},
     {"name":"plant","order":7,"path":"sprites/plant/plant.yy",},
     {"name":"rug1","order":14,"path":"sprites/rug1/rug1.yy",},

@@ -1,5 +1,5 @@
 {
-  "$GMProject":"",
+  "$GMProject":"v1",
   "%Name":"hauntedHouse",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
@@ -31,11 +31,12 @@
     {"$GMFolder":"","%Name":"Tile Sets","folderPath":"folders/Tile Sets.yy","name":"Tile Sets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Timelines","folderPath":"folders/Timelines.yy","name":"Timelines","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
+  "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.8.1.171",
+    "IDEVersion":"2024.13.1.193",
   },
   "name":"hauntedHouse",
   "resources":[
@@ -84,6 +85,7 @@
     {"id":{"name":"ghost","path":"sprites/ghost/ghost.yy",},},
     {"id":{"name":"gui","path":"sprites/gui/gui.yy",},},
     {"id":{"name":"mouse","path":"sprites/mouse/mouse.yy",},},
+    {"id":{"name":"person_lady","path":"sprites/person_lady/person_lady.yy",},},
     {"id":{"name":"person","path":"sprites/person/person.yy",},},
     {"id":{"name":"plant","path":"sprites/plant/plant.yy",},},
     {"id":{"name":"rug1","path":"sprites/rug1/rug1.yy",},},
