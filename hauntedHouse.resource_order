@@ -9,6 +9,7 @@
   ],
   "ResourceOrderSettings":[
     {"name":"client_handler","order":6,"path":"objects/client_handler/client_handler.yy",},
+    {"name":"connection_menu","order":7,"path":"objects/connection_menu/connection_menu.yy",},
     {"name":"house_handler","order":3,"path":"objects/house_handler/house_handler.yy",},
     {"name":"o_furniture","order":3,"path":"objects/o_furniture/o_furniture.yy",},
     {"name":"o_mouse","order":2,"path":"objects/o_mouse/o_mouse.yy",},
@@ -25,6 +26,7 @@
     {"name":"plane_builder","order":1,"path":"objects/plane_builder/plane_builder.yy",},
     {"name":"server_handler","order":5,"path":"objects/server_handler/server_handler.yy",},
     {"name":"weather_handler","order":4,"path":"objects/weather_handler/weather_handler.yy",},
+    {"name":"r_connection_menu","order":1,"path":"rooms/r_connection_menu/r_connection_menu.yy",},
     {"name":"camera_update_script","order":1,"path":"scripts/camera_update_script/camera_update_script.yy",},
     {"name":"get_partial_light_intensity","order":4,"path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},
     {"name":"network_broadcast_all","order":5,"path":"scripts/network_broadcast_all/network_broadcast_all.yy",},

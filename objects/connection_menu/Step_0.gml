@@ -1,0 +1,77 @@
+var mx = device_mouse_x_to_gui(0);
+var my = device_mouse_y_to_gui(0);
+
+// Focus input field
+if (mouse_check_button_pressed(mb_left)) {
+    if (menu_state == MenuState.JOIN) {
+        if (point_in_rectangle(mx, my, b_ip[0], b_ip[1], b_ip[2], b_ip[3])) focused_field = "ip";
+        else if (point_in_rectangle(mx, my, b_port[0], b_port[1], b_port[2], b_port[3])) focused_field = "port";
+        else if (point_in_rectangle(mx, my, b_pass[0], b_pass[1], b_pass[2], b_pass[3])) focused_field = "password";
+        else focused_field = "none";
+    }
+    if (menu_state == MenuState.HOST) {
+        if (point_in_rectangle(mx, my, b_port[0], b_port[1], b_port[2], b_port[3])) focused_field = "port";
+        else focused_field = "none";
+    }
+}
+
+// Type into focused field
+var key = keyboard_lastkey;
+if (key != 0 && keyboard_lastchar != "") {
+    var ch = keyboard_lastchar;
+    if (keyboard_check(vk_backspace)) {
+        if (focused_field == "ip" && string_length(ip_input) > 0) ip_input = string_delete(ip_input, string_length(ip_input), 1);
+        if (focused_field == "port" && string_length(port_input) > 0) port_input = string_delete(port_input, string_length(port_input), 1);
+        if (focused_field == "password" && string_length(password_input) > 0) password_input = string_delete(password_input, string_length(password_input), 1);
+    } else if (string_length(ch) == 1) {
+        if (focused_field == "ip" && string_digits + "." =~ ch) ip_input += ch;
+        if (focused_field == "port" && string_digits =~ ch) port_input += ch;
+        if (focused_field == "password") password_input += ch;
+    }
+}
+
+switch (menu_state) {
+    case MenuState.MAIN:
+        if (mouse_check_button_pressed(mb_left)) {
+            if (point_in_rectangle(mx, my, b_host[0], b_host[1], b_host[2], b_host[3])) menu_state = MenuState.HOST;
+            if (point_in_rectangle(mx, my, b_join[0], b_join[1], b_join[2], b_join[3])) menu_state = MenuState.JOIN;
+        }
+        break;
+
+	case MenuState.HOST:
+	    if (mouse_check_button_pressed(mb_left)) {
+	        if (point_in_rectangle(mx, my, b_start_host[0], b_start_host[1], b_start_host[2], b_start_host[3])) {
+			    global.server_ip = ""; // Signals that this player is the host
+			    global.next_port = real(port_input);
+			    global.server_password = password_input;
+			    room_goto(Room1);
+			}
+
+	        if (point_in_rectangle(mx, my, b_back[0], b_back[1], b_back[2], b_back[3])) {
+	            menu_state = MenuState.MAIN;
+				status_message = "";
+	        }
+	    }
+	    break;
+
+    case MenuState.JOIN:
+        if (mouse_check_button_pressed(mb_left)) {
+            if (point_in_rectangle(mx, my, b_connect[0], b_connect[1], b_connect[2], b_connect[3])) {
+			    if (string_length(ip_input) < 7 || !string_contains(ip_input, ".")) {
+			        status_message = "Error: Invalid IP address.";
+			    } else if (!is_real(port_input) || real(port_input) <= 0) {
+			        status_message = "Error: Invalid port.";
+			    } else {
+			        global.server_ip = ip_input;
+			        global.server_port = real(port_input);
+			        global.server_password = password_input;
+			        room_goto(Room1);
+			    }
+			}
+            if (point_in_rectangle(mx, my, b_back[0], b_back[1], b_back[2], b_back[3])) {
+                menu_state = MenuState.MAIN;
+				status_message = "";
+            }
+        }
+        break;
+}

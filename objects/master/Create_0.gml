@@ -50,15 +50,6 @@ global.darkness_surface = surface_create(room_width, room_height);
 
 global.is_server = false
 
-// Initialize the network role dynamically
-var server_ip = "127.0.0.1"; // Localhost for testing
-var server_port = 12345;
-
-// Create a socket
-var socket = network_create_socket(network_socket_tcp);
-
-// Try to connect to the server
-global.server_socket = network_connect(socket, server_ip, server_port);
 global.client_socket_id = -1
 global.players = [];
 global.other_players = [];
@@ -68,22 +59,25 @@ global.house_map = []
 
 global.player = undefined
 
-// Determine if this instance should be the server
-if (global.server_socket < 0) {
-    global.is_server = true; // No server found; become the server
-    network_destroy(socket); // Destroy the client socket
-    network_create_server(network_socket_tcp, server_port, 32); // Start a server
-    show_debug_message("This instance is the server. (server socket " + string(global.server_socket) + ")");
-	global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
-} else {
-    global.is_server = false; // Server found; become the client
-	global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
-	show_debug_message("This instance is a client. (server socket " + string(global.client_socket_id) + ")");
-}
-
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
 
+// The menu already set these:
+if (global.server_ip != "") {
+    // Player is a client
+    global.client_handler = instance_create_layer(0, 0, "Instances", client_handler);
+    global.client_handler.connect_to(global.server_ip, global.server_port, global.server_password);
+    global.is_server = false;
+    show_debug_message("Client: Attempting to connect to " + global.server_ip);
+}
+else {
+    // Player is the host
+    global.is_server = true;
+    global.houseHandler = instance_create_layer(0, 0, "Instances", house_handler);
+    global.server_handler = instance_create_layer(0, 0, "Instances", server_handler);
+    global.server_handler.start_server(global.next_port);
+    show_debug_message("Server: Hosting on port " + string(global.next_port));
+}
 
 
 // Add a new light source to the global lights array

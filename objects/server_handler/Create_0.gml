@@ -1,24 +1,30 @@
-global.house_map = global.houseHandler.generate_house_map(global.max_rooms, global.num_floors); 
+server_password = ""; // default
 
+function start_server(_port) {
+    server_socket = network_create_server(network_socket_tcp, _port, 32);
+    server_password = global.server_password;
 
-if (array_length(global.house_map) > 0) {
-    //global.current_room = global.house_map[0];
-	
-	global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+    if (global.houseHandler != noone) {
+        global.house_map = global.houseHandler.generate_house_map(global.max_rooms, global.num_floors);
 
-    show_debug_message("Server: House map generated. Current room set.");
-	global.houseHandler.enter_room(0, 0)
-	
-	var new_player = {
-            _socket: global.client_socket_id,
-            _x: global.player.x,
-            _y: global.player.y,
-            _room_id: global.current_room.room_id,
-            _facing: global.player.image_angle
-        };
-    array_push(global.players, new_player);
-	
-	
-} else {
-    show_debug_message("Error: House map generation failed!");
+        if (array_length(global.house_map) > 0) {
+            global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+            global.houseHandler.enter_room(0, 0);
+
+            var new_player = {
+                _socket: global.client_socket_id,
+                _x: global.player.x,
+                _y: global.player.y,
+                _room_id: global.current_room.room_id,
+                _facing: global.player.image_angle
+            };
+            array_push(global.players, new_player);
+
+            show_debug_message("Server: Map generated and player created.");
+        } else {
+            show_debug_message("Server: Failed to generate house map.");
+        }
+    } else {
+        show_debug_message("Server: houseHandler not initialized yet.");
+    }
 }

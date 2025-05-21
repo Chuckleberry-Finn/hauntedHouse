@@ -41,6 +41,7 @@
   "name":"hauntedHouse",
   "resources":[
     {"id":{"name":"client_handler","path":"objects/client_handler/client_handler.yy",},},
+    {"id":{"name":"connection_menu","path":"objects/connection_menu/connection_menu.yy",},},
     {"id":{"name":"house_handler","path":"objects/house_handler/house_handler.yy",},},
     {"id":{"name":"master","path":"objects/master/master.yy",},},
     {"id":{"name":"o_billboardObj","path":"objects/o_billboardObj/o_billboardObj.yy",},},
@@ -61,6 +62,7 @@
     {"id":{"name":"plane_builder","path":"objects/plane_builder/plane_builder.yy",},},
     {"id":{"name":"server_handler","path":"objects/server_handler/server_handler.yy",},},
     {"id":{"name":"weather_handler","path":"objects/weather_handler/weather_handler.yy",},},
+    {"id":{"name":"r_connection_menu","path":"rooms/r_connection_menu/r_connection_menu.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"camera_update_script","path":"scripts/camera_update_script/camera_update_script.yy",},},
     {"id":{"name":"get_partial_light_intensity","path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},},
@@ -99,6 +101,7 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
+    {"roomId":{"name":"r_connection_menu","path":"rooms/r_connection_menu/r_connection_menu.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "templateType":null,
