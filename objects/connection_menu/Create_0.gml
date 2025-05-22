@@ -1,6 +1,8 @@
 enum MenuState { MAIN, HOST, JOIN }
 menu_state = MenuState.MAIN;
 
+copy_timer = 0;
+
 ip_input = "";
 port_input = "5000";
 password_input = "";

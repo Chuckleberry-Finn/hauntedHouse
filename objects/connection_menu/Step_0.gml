@@ -39,6 +39,12 @@ switch (menu_state) {
         break;
 
 	case MenuState.HOST:
+	
+		if (copy_timer > 0) {
+		    copy_timer -= 1;
+		    if (copy_timer <= 0) status_message = "";
+		}
+	
 	    if (mouse_check_button_pressed(mb_left)) {
 	        if (point_in_rectangle(mx, my, b_start_host[0], b_start_host[1], b_start_host[2], b_start_host[3])) {
 			    global.server_ip = ""; // Signals that this player is the host
@@ -46,6 +52,12 @@ switch (menu_state) {
 			    global.server_password = password_input;
 			    room_goto(Room1);
 			}
+
+			if (point_in_rectangle(mx, my, b_ip[0], b_ip[1], b_ip[2], b_ip[3])) {
+		        clipboard_set_text(local_ip); // <- Copy to clipboard
+		        status_message = "IP copied to clipboard!";
+				copy_timer = room_speed * 1.5;
+		    }
 
 	        if (point_in_rectangle(mx, my, b_back[0], b_back[1], b_back[2], b_back[3])) {
 	            menu_state = MenuState.MAIN;
