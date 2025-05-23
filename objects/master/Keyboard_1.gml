@@ -120,9 +120,9 @@ if (is_moving) {
 		}
 		
 		network_broadcast_all(buffer, global.client_socket_id);
-		show_debug_message("Server: Sent player update for socket: " +  string(global.client_socket_id));
+		//show_debug_message("Server: Sent player update for socket: " +  string(global.client_socket_id));
     } else {
-		show_debug_message("ping server: player update for socket: " +  string(global.server_socket));
+		//show_debug_message("ping server: player update for socket: " +  string(global.server_socket));
 		network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
 	}
 	

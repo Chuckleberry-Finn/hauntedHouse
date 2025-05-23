@@ -20,6 +20,7 @@ switch (menu_state) {
 		
 		draw_UI_button(b_host, "Host Game")
 		draw_UI_button(b_join, "Join Game")
+		draw_UI_button(b_quit, "Quit")
 
         break;
 

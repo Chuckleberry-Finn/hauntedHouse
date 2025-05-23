@@ -83,6 +83,7 @@ function test_move_collide_script(_x, _y, move_x, move_y) {
         }
     }
 
+
     // Step 2: Handle door collisions and room transitions with angle range check
     if (global.current_room != undefined && is_array(global.current_room.connected_room_ids)) {
         var center_threshold = 64;

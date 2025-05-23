@@ -1,7 +1,16 @@
 server_password = ""; // default
 
 function start_server(_port) {
-    server_socket = network_create_server(network_socket_tcp, _port, 32);
+
+	global.server_socket = network_create_server(network_socket_tcp, _port, 32);
+
+    if (global.server_socket != -1) {
+		
+        show_debug_message("Server: Listening on port " + string(_port));
+    } else {
+        show_debug_message("Server: Failed to start on port " + string(_port));
+    }
+	
     server_password = global.server_password;
 
     if (global.houseHandler != noone) {
@@ -9,6 +18,7 @@ function start_server(_port) {
 
         if (array_length(global.house_map) > 0) {
             global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+			show_debug_message("Server: House map generated. Current room set.");
             global.houseHandler.enter_room(0, 0);
 
             var new_player = {

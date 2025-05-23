@@ -3,7 +3,8 @@ gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
 gpu_set_cullmode(cull_counterclockwise);
 
-audio_play_sound(snd_ambience, 1, true);
+//audio_play_sound(snd_ambience, 1, true);
+
 sound_current = noone;
 
 global.shadow_color = make_color_rgb(10, 5, 15);
@@ -55,6 +56,8 @@ global.players = [];
 global.other_players = [];
 
 global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
+global.houseHandler.persistent = true;
+
 global.house_map = []
 
 global.player = undefined
@@ -66,14 +69,13 @@ global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 if (global.server_ip != "") {
     // Player is a client
     global.client_handler = instance_create_layer(0, 0, "Instances", client_handler);
-    global.client_handler.connect_to(global.server_ip, global.server_port, global.server_password);
+    //global.client_handler.connect_to(global.server_ip, global.server_port, global.server_password);
     global.is_server = false;
     show_debug_message("Client: Attempting to connect to " + global.server_ip);
 }
 else {
     // Player is the host
     global.is_server = true;
-    global.houseHandler = instance_create_layer(0, 0, "Instances", house_handler);
     global.server_handler = instance_create_layer(0, 0, "Instances", server_handler);
     global.server_handler.start_server(global.next_port);
     show_debug_message("Server: Hosting on port " + string(global.next_port));

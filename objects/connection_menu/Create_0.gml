@@ -1,3 +1,5 @@
+audio_play_sound(snd_ambience, 1, true);
+
 enum MenuState { MAIN, HOST, JOIN }
 menu_state = MenuState.MAIN;
 
@@ -8,6 +10,8 @@ port_input = "5000";
 password_input = "";
 
 focused_field = "none";
+key_input_delay = 0;
+key_input_max_delay = 6;
 
 status_message = "Fetching public IP...";
 local_ip = "Fetching...";
@@ -24,3 +28,4 @@ b_ip = [100, 60, 300, 80];
 b_port = [100, 100, 300, 120];
 b_pass = [100, 140, 300, 160];
 b_host_pass = [100, 140, 300, 160];
+b_quit = [100, 250, 300, 280];
