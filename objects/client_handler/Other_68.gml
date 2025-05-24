@@ -1,5 +1,3 @@
-show_debug_message("Client: Async event = " + string(async_load[? "type"]));
-
 if (async_load[? "type"] == network_type_data) {
     var buffer = async_load[? "buffer"];
     var e_type = buffer_read(buffer, buffer_u8);  // First byte is the event type

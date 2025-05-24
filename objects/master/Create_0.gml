@@ -61,19 +61,18 @@ global.player = undefined
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
 
-// The menu already set these:
+
 if (global.server_ip != "") {
     // Client
 	global.is_server = false;
 	show_debug_message("Client: Attempting to Connect to " + global.server_ip + ":" + string(global.server_port));
-    global.client_handler = instance_create_layer(0, 0, "Instances", client_handler);
+    global.client_handler = instance_create_depth(-1, -1, -1, client_handler);
     
-
 } else {
     // Host
     global.is_server = true;
 	show_debug_message("Server: Attempting to Host on port " + string(global.server_port));
-    global.server_handler = instance_create_layer(0, 0, "Instances", server_handler);
+    global.server_handler = instance_create_depth(-1, -1, -1, server_handler);
 }
 
 
