@@ -26,7 +26,6 @@
     {"name":"plane_builder","order":1,"path":"objects/plane_builder/plane_builder.yy",},
     {"name":"server_handler","order":5,"path":"objects/server_handler/server_handler.yy",},
     {"name":"weather_handler","order":4,"path":"objects/weather_handler/weather_handler.yy",},
-    {"name":"r_connection_menu","order":1,"path":"rooms/r_connection_menu/r_connection_menu.yy",},
     {"name":"camera_update_script","order":1,"path":"scripts/camera_update_script/camera_update_script.yy",},
     {"name":"get_partial_light_intensity","order":4,"path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},
     {"name":"network_broadcast_all","order":5,"path":"scripts/network_broadcast_all/network_broadcast_all.yy",},

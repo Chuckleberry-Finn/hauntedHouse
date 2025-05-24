@@ -62,7 +62,6 @@
     {"id":{"name":"plane_builder","path":"objects/plane_builder/plane_builder.yy",},},
     {"id":{"name":"server_handler","path":"objects/server_handler/server_handler.yy",},},
     {"id":{"name":"weather_handler","path":"objects/weather_handler/weather_handler.yy",},},
-    {"id":{"name":"r_connection_menu","path":"rooms/r_connection_menu/r_connection_menu.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"camera_update_script","path":"scripts/camera_update_script/camera_update_script.yy",},},
     {"id":{"name":"get_partial_light_intensity","path":"scripts/get_partial_light_intensity/get_partial_light_intensity.yy",},},
@@ -101,7 +100,6 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"r_connection_menu","path":"rooms/r_connection_menu/r_connection_menu.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "templateType":null,
