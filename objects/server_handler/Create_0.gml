@@ -1,40 +1,37 @@
-server_password = ""; // default
+server_password = global.server_password;
 
-function start_server(_port) {
 
-	global.server_socket = network_create_server(network_socket_tcp, _port, 32);
+global.server_socket = network_create_server(network_socket_tcp, global.server_port, 32);
 
-    if (global.server_socket != -1) {
-		
-        show_debug_message("Server: Listening on port " + string(_port));
+if (global.server_socket != -1) {
+    show_debug_message("Server: Listening on port " + string(global.server_port));
+} else {
+    show_debug_message("Server: Failed to start on port " + string(global.server_port));
+}
+
+
+
+if (global.houseHandler != noone) {
+    global.house_map = global.houseHandler.generate_house_map(global.max_rooms, global.num_floors);
+
+    if (array_length(global.house_map) > 0) {
+        global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
+		show_debug_message("Server: House map generated. Current room set.");
+        global.houseHandler.enter_room(0, 0);
+
+        var new_player = {
+            _socket: global.client_socket_id,
+            _x: global.player.x,
+            _y: global.player.y,
+            _room_id: global.current_room.room_id,
+            _facing: global.player.image_angle
+        };
+        array_push(global.players, new_player);
+
+        show_debug_message("Server: Map generated and player created.");
     } else {
-        show_debug_message("Server: Failed to start on port " + string(_port));
+        show_debug_message("Server: Failed to generate house map.");
     }
-	
-    server_password = global.server_password;
-
-    if (global.houseHandler != noone) {
-        global.house_map = global.houseHandler.generate_house_map(global.max_rooms, global.num_floors);
-
-        if (array_length(global.house_map) > 0) {
-            global.player = instance_create_depth(room_width / 2, room_height / 2, 0, o_person);
-			show_debug_message("Server: House map generated. Current room set.");
-            global.houseHandler.enter_room(0, 0);
-
-            var new_player = {
-                _socket: global.client_socket_id,
-                _x: global.player.x,
-                _y: global.player.y,
-                _room_id: global.current_room.room_id,
-                _facing: global.player.image_angle
-            };
-            array_push(global.players, new_player);
-
-            show_debug_message("Server: Map generated and player created.");
-        } else {
-            show_debug_message("Server: Failed to generate house map.");
-        }
-    } else {
-        show_debug_message("Server: houseHandler not initialized yet.");
-    }
+} else {
+    show_debug_message("Server: houseHandler not initialized yet.");
 }

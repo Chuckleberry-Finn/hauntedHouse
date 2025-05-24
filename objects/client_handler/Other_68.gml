@@ -1,4 +1,4 @@
-/// Client Handler Networking Event
+show_debug_message("Client: Async event = " + string(async_load[? "type"]));
 
 if (async_load[? "type"] == network_type_data) {
     var buffer = async_load[? "buffer"];

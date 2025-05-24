@@ -84,7 +84,7 @@ switch (menu_state) {
 	    if (mouse_check_button_pressed(mb_left)) {
 	        if (point_in_rectangle(mx, my, b_start_host[0], b_start_host[1], b_start_host[2], b_start_host[3])) {
 			    global.server_ip = ""; // Signals that this player is the host
-			    global.next_port = real(port_input);
+			    global.server_port = real(port_input);
 			    global.server_password = password_input;
 			    room_goto(Room1);
 			}
