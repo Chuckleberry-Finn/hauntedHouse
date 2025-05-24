@@ -3,6 +3,8 @@ show_debug_message("Server: Async event = " + string(async_load[? "type"]));
 if (async_load[? "type"] == network_type_connect) {
     var client_socket = async_load[? "socket"];
 
+	show_debug_message("Server: network_type_connect = " + client_socket);
+	
     var new_player = {
         _socket: client_socket,
         _x: room_width / 2,

@@ -9,5 +9,4 @@ if (global.server_socket != -1) {
     show_debug_message("Client connected to server at socket:" + string(global.server_socket) + ", " + global.server_ip + ":" + string(global.server_port));
 } else {
     show_debug_message("Failed to connect to server at socket:"  + string(global.server_socket) + ", " + global.server_ip + ":" + string(global.server_port));
-	room_goto(r_connection_menu);
 }

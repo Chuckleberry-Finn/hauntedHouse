@@ -87,6 +87,7 @@ switch (menu_state) {
 			    global.server_port = real(port_input);
 			    global.server_password = password_input;
 				global.master = instance_create_depth(-1, -1, -1, master);
+				instance_destroy();
 			}
 
 			if (point_in_rectangle(mx, my, b_ip[0], b_ip[1], b_ip[2], b_ip[3])) {
@@ -115,6 +116,7 @@ switch (menu_state) {
 			        global.server_password = password_input;
 					status_message = "";
 					global.master = instance_create_depth(-1, -1, -1, master);
+					instance_destroy();
 			    }
 			}
             if (point_in_rectangle(mx, my, b_back[0], b_back[1], b_back[2], b_back[3])) {

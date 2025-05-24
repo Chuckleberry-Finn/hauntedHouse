@@ -42,9 +42,6 @@ global.bottomWall = instance_create_depth(-1, -1, -1, plane_builder, {draw: "sou
 global.current_room = false;
 global.current_room_objs = [];
 
-//global.house_map = global.houseHandler.generate_house_map(max_rooms, num_floors);
-//show_debug_message("Generated House Map: ", array_length(global.house_map));
-
 global.lights = [];
 global.num_lights = 0;
 global.darkness_surface = surface_create(room_width, room_height);
@@ -57,8 +54,6 @@ global.players = [];
 global.other_players = [];
 
 global.houseHandler = instance_create_depth(-1, -1, -1, house_handler);
-global.houseHandler.persistent = true;
-
 global.house_map = []
 
 global.player = undefined

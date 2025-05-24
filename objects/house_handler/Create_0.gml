@@ -408,10 +408,10 @@ function fill_room(_room) {
 	
 	if (global.is_server) {
 		network_broadcast_all(buffer);
-		//show_debug_message("Server: Sent room object update.");
+		show_debug_message("Server: Sent room object update.");
     } else {
 		network_send_packet(global.server_socket, buffer, buffer_tell(buffer));
-		//show_debug_message("Client " + string(global.server_socket) + ": Sent room object update.");
+		show_debug_message("Client " + string(global.server_socket) + ": Sent room object update.");
 	}
 	
     buffer_delete(buffer);
