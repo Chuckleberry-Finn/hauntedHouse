@@ -6,7 +6,7 @@ menu_state = MenuState.MAIN;
 copy_timer = 0;
 
 ip_input = "";
-port_input = "12345";
+port_input = "54321";
 password_input = "";
 
 focused_field = "none";

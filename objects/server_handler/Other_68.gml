@@ -50,7 +50,7 @@ if (async_load[? "type"] == network_type_data) {
 		    var player_found = false;
 		    for (var i = 0; i < array_length(global.players); i++) {
 		        var player = global.players[i];
-				show_debug_message("player._socket: " + string(player._socket))
+				//show_debug_message("player._socket: " + string(player._socket))
 		        if (player._socket == p_socket) {
 		            player._x = p_x;
 		            player._y = p_y;

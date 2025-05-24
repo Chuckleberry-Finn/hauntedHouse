@@ -36,7 +36,7 @@ if (async_load[? "type"] == network_type_data) {
 		    }
 
 			if (!found_data) {
-				show_debug_message("Creating player data for socket: " + string(p_socket));
+				//show_debug_message("Creating player data for socket: " + string(p_socket));
 				var new_player = { _socket: p_socket, _x: p_x, _y: p_y, _room_id: room_id, _facing: facing };
 				found_data = new_player
 				array_push(global.players, found_data);
@@ -44,7 +44,7 @@ if (async_load[? "type"] == network_type_data) {
 
 		    if (found_data) {
 			    if (p_socket == global.client_socket_id) {
-			        show_debug_message("Received own socket ID. Ignoring player creation.");
+			        //show_debug_message("Received own socket ID. Ignoring player creation.");
 
 			    } else {
 					
@@ -97,7 +97,7 @@ if (async_load[? "type"] == network_type_data) {
                 _room.generated = true;
             }
      
-            show_debug_message("Client: Room " + string(floor_id) + "," + string(room_id) + " objects recieved.");
+            //show_debug_message("Client: Room " + string(floor_id) + "," + string(room_id) + " objects recieved.");
             break;
     
         default:

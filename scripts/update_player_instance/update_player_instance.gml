@@ -8,8 +8,8 @@ function update_player_instance(data){
 	
 	var player_found = false;
 	
-	show_debug_message("global.client_socket_id: " + string(global.client_socket_id));
-	show_debug_message("Updating player instance " + string(p_socket));
+	//show_debug_message("global.client_socket_id: " + string(global.client_socket_id));
+	//show_debug_message("Updating player instance " + string(p_socket));
 	
 	if (p_socket == global.client_socket_id) { return };
 
@@ -50,6 +50,6 @@ function update_player_instance(data){
 		player_found.y = p_y
 		player_found.image_angle = facing
 						
-		show_debug_message("Updated player instance for socket " + string(p_socket) + " X:" + string(p_x) + " Y:" + string(p_y));
+		//show_debug_message("Updated player instance for socket " + string(p_socket) + " X:" + string(p_x) + " Y:" + string(p_y));
 	}
 }
