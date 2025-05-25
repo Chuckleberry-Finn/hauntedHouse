@@ -1,5 +1,6 @@
 if (async_load[? "type"] == network_type_connect) {
-    var client_socket = async_load[? "socket"];
+    
+	var client_socket = async_load[? "socket"];
 
     var new_player = {
         _socket: client_socket,

@@ -1,3 +1,10 @@
+
+if (async_load[? "type"] == network_type_connect) {
+	var succeeded = async_load[? "succeeded"];
+	show_debug_message("Client connect:" + succeeded);  //  this is 1 the first time, and then 0 the second time
+}
+
+
 if (async_load[? "type"] == network_type_data) {
     var buffer = async_load[? "buffer"];
     var e_type = buffer_read(buffer, buffer_u8);  // First byte is the event type
