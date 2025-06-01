@@ -60,7 +60,16 @@ global.player = undefined
 
 global.weatherHandler = instance_create_depth(-1, -1, -1, weather_handler);
 
-
+global.guiHandler = instance_create_depth(-1, -1, -1, gui_handler);
+//_id, _x, _y, _w, _h, _data
+var sb_offset = 0
+global.guiHandler.gui_element_create("stat_sanity", 32, 32, 64, 64, stat_sanity, 0);
+sb_offset += 1
+global.guiHandler.gui_element_create("stat_smarts", 32, 32+(sb_offset*68), 64, 64, stat_smarts, 0);
+sb_offset += 1
+global.guiHandler.gui_element_create("stat_speed", 32, 32+(sb_offset*68), 64, 64, stat_speed, 0);
+sb_offset += 1
+global.guiHandler.gui_element_create("stat_strength", 32, 32+(sb_offset*68), 64, 64, stat_strength, 0);
 
 if (global.server_ip != "") {
     // Client
